@@ -13,7 +13,6 @@ struct VendingMachine {
     private var coin: Int
 }
 
-
 protocol MachineManageable {
     
     func addStockBeverage()
@@ -27,8 +26,6 @@ protocol Salable {
     func buyBeverage()
     func availableBeverage()
 }
-
-
 
 extension VendingMachine: MachineManageable {
     
