@@ -24,6 +24,14 @@ class Beverage {
         self.name = name
         self.manufacture = date
     }
+    
+    init(beverage: Beverage) {
+        self.brand = beverage.brand
+        self.capacity = beverage.capacity
+        self.price = beverage.price
+        self.name = beverage.name
+        self.manufacture = beverage.manufacture
+    }
 }
 
 extension Beverage: CustomStringConvertible {
