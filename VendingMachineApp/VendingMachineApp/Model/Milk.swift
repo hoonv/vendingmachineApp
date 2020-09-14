@@ -8,22 +8,52 @@
 
 import Foundation
 
-enum MilkTaste {
-    case strawberry
-    case choco
-    case banana
-}
-
-class Milk: Beverage {
+class Milk: Beverage, MilkCheckable {
     
     private static let secondInDay = 86400
     private static let bestDays = 30
-    private let taste: MilkTaste
     private let expiration: Date
-    
-    init(brand: String, capacity: Int, price: Int, name: String, date: Date, taste: MilkTaste) {
-        self.taste = taste
+    internal let milkContent: Int
+
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int) {
         expiration = Date(timeIntervalSinceNow: TimeInterval(Milk.secondInDay * Milk.bestDays))
+        milkContent = milk
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
+    }
+    
+    init(beverage: Beverage, milk: Int) {
+        expiration = Date(timeIntervalSinceNow: TimeInterval(Milk.secondInDay * Milk.bestDays))
+        milkContent = milk
+        super.init(beverage: beverage)
+    }
+}
+
+final class ChocoMilk: Milk, SugarCheckable {
+    
+    internal let sugarContent: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int, sugar: Int) {
+        sugarContent = sugar
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, milk: milk)
+    }
+    
+    init(beverage: Beverage, milk: Int, sugar: Int) {
+        sugarContent = sugar
+        super.init(beverage: beverage, milk: milk)
+    }
+}
+
+final class StrawberryMilk: Milk, FatCheckable {
+    
+    internal let fatContent: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int, fat: Int) {
+        fatContent = fat
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, milk: milk)
+    }
+    
+    init(beverage: Beverage, milk: Int, fat: Int) {
+        fatContent = fat
+        super.init(beverage: beverage, milk: milk)
     }
 }
