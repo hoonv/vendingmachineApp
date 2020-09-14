@@ -8,20 +8,47 @@
 
 import Foundation
 
-enum CoffeeTaste {
-    case top
-    case cantata
-    case georgia
+class Coffee: Beverage, CaffeineCheckable {
+    
+    internal let caffeineContent: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int) {
+        caffeineContent = caffeine
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
+    }
+    
+    init(beverage: Beverage, caffeine: Int) {
+        caffeineContent = caffeine
+        super.init(beverage: beverage)
+    }
 }
 
-class Coffee: Beverage {
+final class Cantata: Coffee, SugarCheckable {
     
-    private let taste: CoffeeTaste
-    private let caffeine: Int
+    internal let sugarContent: Int
     
-    init(brand: String, capacity: Int, price: Int, name: String, caffeine: Int, date: Date, taste: CoffeeTaste) {
-        self.taste = taste
-        self.caffeine = caffeine
-        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int, sugar: Int) {
+        sugarContent = sugar
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, caffeine: caffeine)
+    }
+    
+    init(beverage: Beverage, caffeine: Int, sugar: Int) {
+        sugarContent = sugar
+        super.init(beverage: beverage, caffeine: caffeine)
+    }
+}
+
+final class Georgia: Coffee, MilkCheckable {
+    
+    internal let milkContent: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int, milk: Int) {
+        milkContent = milk
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, caffeine: caffeine)
+    }
+
+    init(beverage: Beverage, caffeine: Int, milk: Int) {
+        milkContent = milk
+        super.init(beverage: beverage, caffeine: caffeine)
     }
 }
