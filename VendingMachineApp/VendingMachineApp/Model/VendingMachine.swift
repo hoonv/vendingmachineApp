@@ -9,5 +9,46 @@
 import Foundation
 
 struct VendingMachine {
-    
+
+    private var coin: Int
+}
+
+
+protocol MachineManageable {
+    func addStockBeverage()
+    func removeStockBeverage()
+    func expiredBeverage()
+}
+
+protocol Salable {
+    func checkBalance()
+    func buyBeverage()
+    func availableBeverage()
+}
+
+
+
+extension VendingMachine: MachineManageable {
+    func addStockBeverage() {
+        
+    }
+    func removeStockBeverage() {
+        
+    }
+    func expiredBeverage() {
+        
+    }
+}
+
+
+extension VendingMachine: Salable {
+    func checkBalance() {
+        
+    }
+    func buyBeverage() {
+        
+    }
+    func availableBeverage() {
+        
+    }
 }
