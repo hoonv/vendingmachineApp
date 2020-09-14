@@ -15,12 +15,14 @@ struct VendingMachine {
 
 
 protocol MachineManageable {
+    
     func addStockBeverage()
     func removeStockBeverage()
     func expiredBeverage()
 }
 
 protocol Salable {
+    
     func checkBalance()
     func buyBeverage()
     func availableBeverage()
@@ -29,12 +31,15 @@ protocol Salable {
 
 
 extension VendingMachine: MachineManageable {
+    
     func addStockBeverage() {
         
     }
+    
     func removeStockBeverage() {
         
     }
+    
     func expiredBeverage() {
         
     }
@@ -42,12 +47,15 @@ extension VendingMachine: MachineManageable {
 
 
 extension VendingMachine: Salable {
+    
     func checkBalance() {
         
     }
+    
     func buyBeverage() {
         
     }
+    
     func availableBeverage() {
         
     }

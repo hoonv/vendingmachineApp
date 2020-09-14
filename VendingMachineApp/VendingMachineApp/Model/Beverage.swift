@@ -35,6 +35,7 @@ class Beverage {
 }
 
 extension Beverage: CustomStringConvertible {
+    
     var description: String {
         "\(brand), \(capacity)ml, \(price)원, \(name), \(manufacture)"
     }
