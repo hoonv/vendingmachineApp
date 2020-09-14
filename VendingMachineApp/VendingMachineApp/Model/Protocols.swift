@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol SugarCheckable {
     
     var sugarContent: Int { get }

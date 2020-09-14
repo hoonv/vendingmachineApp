@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class Beverage {
     
     private let brand: String
