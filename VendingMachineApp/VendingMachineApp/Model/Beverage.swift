@@ -10,24 +10,25 @@ import Foundation
 
 
 class Beverage {
+    
     private let brand: String
     private let capacity: Int
     private let price: Int
     private let name: String
-    private let dateManufacture: Date
+    private let manufacture: Date
     
-    init(brand: String, capacity: Int, price: Int, name: String) {
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date) {
         self.brand = brand
         self.capacity = capacity
         self.price = price
         self.name = name
-        dateManufacture = Date()
+        self.manufacture = date
     }
 }
 
 extension Beverage: CustomStringConvertible {
     var description: String {
-        "\(brand), \(capacity)ml, \(price)원, \(name), \(dateManufacture)"
+        "\(brand), \(capacity)ml, \(price)원, \(name), \(manufacture)"
     }
 }
 

@@ -15,10 +15,15 @@ enum MilkTaste {
 }
 
 class Milk: Beverage {
-    let taste: MilkTaste
     
-    init(taste: MilkTaste) {
+    private static let secondInDay = 86400
+    private static let bestDays = 30
+    private let taste: MilkTaste
+    private let expiration: Date
+    
+    init(brand: String, capacity: Int, price: Int, name: String, date: Date, taste: MilkTaste) {
         self.taste = taste
-        super.init(brand: "", capacity: 0, price: 0, name: "")
+        expiration = Date(timeIntervalSinceNow: TimeInterval(Milk.secondInDay * Milk.bestDays))
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
 }

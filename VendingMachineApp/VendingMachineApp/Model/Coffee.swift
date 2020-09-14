@@ -15,10 +15,13 @@ enum CoffeeTaste {
 }
 
 class Coffee: Beverage {
-    let taste: CoffeeTaste
     
-    init(taste: CoffeeTaste) {
+    private let taste: CoffeeTaste
+    private let caffeine: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, caffeine: Int, date: Date, taste: CoffeeTaste) {
         self.taste = taste
-        super.init(brand: "", capacity: 0, price: 0, name: "")
+        self.caffeine = caffeine
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
 }

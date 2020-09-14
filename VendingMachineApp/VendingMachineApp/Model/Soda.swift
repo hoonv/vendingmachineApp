@@ -12,14 +12,16 @@ enum SodaTaste {
     case coke
     case cider
     case fanta
-    
 }
 
 class Soda: Beverage {
-    let taste: SodaTaste
     
-    init(taste: SodaTaste) {
+    private let taste: SodaTaste
+    private let calorie: Int
+    
+    init(brand: String, capacity: Int, price: Int, name: String, calorie: Int, date: Date, taste: SodaTaste) {
         self.taste = taste
-        super.init(brand: "", capacity: 0, price: 0, name: "")
+        self.calorie = calorie
+        super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
 }
