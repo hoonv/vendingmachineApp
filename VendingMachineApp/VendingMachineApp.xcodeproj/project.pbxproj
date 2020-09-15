@@ -20,6 +20,7 @@
 		E0FCE93B250F51BB00851F59 /* Coffee.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE93A250F51BB00851F59 /* Coffee.swift */; };
 		E0FCE93D250F5A2000851F59 /* VendingMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE93C250F5A2000851F59 /* VendingMachine.swift */; };
 		E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */; };
+		E0FCE9412510614A00851F59 /* BeverageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE9402510614A00851F59 /* BeverageFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		E0FCE93A250F51BB00851F59 /* Coffee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coffee.swift; sourceTree = "<group>"; };
 		E0FCE93C250F5A2000851F59 /* VendingMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendingMachine.swift; sourceTree = "<group>"; };
 		E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeverageProtocols.swift; sourceTree = "<group>"; };
+		E0FCE9402510614A00851F59 /* BeverageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeverageFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +127,12 @@
 			isa = PBXGroup;
 			children = (
 				E0FCE934250F476700851F59 /* Beverage.swift */,
+				E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */,
+				E0FCE9402510614A00851F59 /* BeverageFactory.swift */,
 				E0FCE936250F51AC00851F59 /* Milk.swift */,
 				E0FCE938250F51B300851F59 /* Soda.swift */,
 				E0FCE93A250F51BB00851F59 /* Coffee.swift */,
 				E0FCE93C250F5A2000851F59 /* VendingMachine.swift */,
-				E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				E0FCE935250F476700851F59 /* Beverage.swift in Sources */,
 				E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */,
 				E0FCE937250F51AC00851F59 /* Milk.swift in Sources */,
+				E0FCE9412510614A00851F59 /* BeverageFactory.swift in Sources */,
 				E0FCE93B250F51BB00851F59 /* Coffee.swift in Sources */,
 				E0FCE93D250F5A2000851F59 /* VendingMachine.swift in Sources */,
 			);
