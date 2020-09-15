@@ -10,62 +10,84 @@ import Foundation
 
 protocol MachineManageable {
     
-    func addStockBeverage(new: Beverage)
-    func removeStockBeverage(of: Beverage)
-    func expiredBeverage()
+    func removeStockBeverage(item: Beverage)
+    mutating func addStockBeverage(item: Beverage)
 }
 
 protocol Salable {
     
-    func checkCoin() -> Int
-    func buyBeverage() -> Beverage
-    func availableBeverage() -> [Beverage]
-    mutating func pushCoin(of coin: Int)
+    func currentCoin() -> Int
+    func canBuy() -> [Beverage]
+    mutating func buyBeverage(item: Beverage) -> Beverage?
+    mutating func pushCoin(of: Int)
 }
 
 struct VendingMachine {
 
-    private var coin: Int
-    private var items: [Beverage: Int]
+    private var coin: Int = 0
+    private var items: [BeverageLine] = []
     
-    init() {
-        coin = 0
-        items = [:]
+    init(items: [Beverage] = []) {
+        items.forEach {
+            addStockBeverage(item: $0)
+        }
+    }
+    
+    mutating func addStockBeverages(items: [Beverage]) {
+        items.forEach { addStockBeverage(item: $0) }
+    }
+    
+    mutating func removeCoin(of amount: Int) {
+        coin -= amount
+    }
+    
+    func stockToDictionary() -> [Beverage: Int] {
+        return items.reduce(into: [Beverage: Int]()) { $0[$1.sample] = $1.count }
     }
 }
-
 
 extension VendingMachine: MachineManageable {
     
-    func addStockBeverage(new: Beverage) {
-        
+    func removeStockBeverage(item: Beverage) {
+        let filtered = items.filter { $0.isEqualToSample(another: item) }
+        if let first = filtered.first {
+            let _ = first.popLast()
+        }
     }
     
-    func removeStockBeverage(of bever: Beverage) {
-        
-    }
-    
-    func expiredBeverage() {
-        
+    mutating func addStockBeverage(item: Beverage) {
+        let filtered = items.filter { $0.isEqualToSample(another: item) }
+        if let first = filtered.first {
+            first.append(new: item)
+        } else {
+            items.append(BeverageLine(sample: item, items: [item]))
+        }
     }
 }
 
-
-
 extension VendingMachine: Salable {
     
-    mutating func pushCoin(of coin: Int) {
-        self.coin += coin
-    }
-    
-    func checkCoin() -> Int {
+    func currentCoin() -> Int {
         return coin
     }
     
-    func buyBeverage() -> Beverage {
-        
+    func canBuy() -> [Beverage] {
+        return items.filter{ $0.canBuy(coin: coin) }
+                    .map { $0.sample }
     }
     
-    func availableBeverage() -> [Beverage] {
+    mutating func pushCoin(of amount: Int) {
+        coin += amount
+    }
+    
+    mutating func buyBeverage(item: Beverage) -> Beverage? {
+        let filtered = items.filter {
+            $0.isEqualToSample(another: item) && $0.canBuy(coin: coin)
+        }
+        if let new = filtered.first?.popFirst() {
+            removeCoin(of: new.price)
+            return new
+        }
+        return nil
     }
 }
