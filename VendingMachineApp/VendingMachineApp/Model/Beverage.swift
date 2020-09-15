@@ -9,7 +9,7 @@
 import Foundation
 
 class Beverage {
-    
+        
     private let brand: String
     private let capacity: Int
     private let price: Int
@@ -40,3 +40,19 @@ extension Beverage: CustomStringConvertible {
     }
 }
 
+extension Beverage: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(brand)
+        hasher.combine(capacity)
+        hasher.combine(price)
+        hasher.combine(name)
+        hasher.combine(manufacture)
+    }
+    
+    static func == (lhs: Beverage, rhs: Beverage) -> Bool {
+        return lhs.brand == rhs.brand && lhs.capacity == rhs.capacity
+            && lhs.price == rhs.price && lhs.name == rhs.name
+            && lhs.manufacture == rhs.manufacture
+    }
+}
