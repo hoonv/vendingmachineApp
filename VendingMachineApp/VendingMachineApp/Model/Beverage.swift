@@ -12,7 +12,7 @@ class Beverage {
         
     private let brand: String
     private let capacity: Int
-    private let price: Int
+    private(set) var price: Int
     private let name: String
     private let manufacture: Date
     
@@ -36,7 +36,15 @@ class Beverage {
 extension Beverage: CustomStringConvertible {
     
     var description: String {
-        "\(brand), \(capacity)ml, \(price)원, \(name), \(manufacture)"
+        "\(brand), \(capacity)ml, \(price)원, \(name), \(manufacture.yyyymmdd())"
+    }
+}
+
+extension Beverage: Equatable {
+    
+    static func == (lhs: Beverage, rhs: Beverage) -> Bool {
+        return lhs.brand == rhs.brand && lhs.name == rhs.name
+            && lhs.capacity == rhs.capacity && lhs.price == rhs.price
     }
 }
 
@@ -44,15 +52,16 @@ extension Beverage: Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(brand)
+        hasher.combine(name)
         hasher.combine(capacity)
         hasher.combine(price)
-        hasher.combine(name)
-        hasher.combine(manufacture)
     }
-    
-    static func == (lhs: Beverage, rhs: Beverage) -> Bool {
-        return lhs.brand == rhs.brand && lhs.capacity == rhs.capacity
-            && lhs.price == rhs.price && lhs.name == rhs.name
-            && lhs.manufacture == rhs.manufacture
+}
+
+extension Date {
+    func yyyymmdd() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        return formatter.string(from: self)
     }
 }
