@@ -11,24 +11,63 @@ import XCTest
 
 class VendingMachineAppTests: XCTestCase {
 
+    var vm = VendingMachine()
+    var factory = BeverageFactory()
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        vm.addStockBeverages(items: factory.makeCantata(count: 10)) // 2500원
+        vm.addStockBeverages(items: factory.makeCoke(count: 10)) // 2000원
+        vm.addStockBeverages(items: factory.makeChocoMilk(count: 10)) // 1500원
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        vm = VendingMachine()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_1500원으로_살수있는_초코우유() throws {
+        vm.pushCoin(of: 1500)
+        XCTAssertEqual(vm.canBuy().count, 1)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_2000원으로_살수있는_초코우유와콜라() throws {
+        vm.pushCoin(of: 2000)
+        XCTAssertEqual(vm.canBuy().count, 2)
+    }
+
+    func test_2500원으로_살수있는_초코우유와콜라칸타타() throws {
+        vm.pushCoin(of: 2500)
+        XCTAssertEqual(vm.canBuy().count, 3)
+    }
+    
+    func test_1500원투입후_초코우유사먹고_0원확인() throws {
+        vm.pushCoin(of: 1500)
+        let _ = vm.buyBeverage(item: factory.makeChocoMilk()[0])
+        XCTAssertEqual(vm.currentCoin(), 0)
+    }
+
+    func test_1500원투입후_콜라사먹으려하지만_실패해서_돈그대로() throws {
+        vm.pushCoin(of: 1500)
+        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
+        XCTAssertEqual(vm.currentCoin(), 1500)
+    }
+    
+    func test_5000원투입후_칸타타콜라사먹고_남은돈500원() throws {
+        vm.pushCoin(of: 5000)
+        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
+        let _ = vm.buyBeverage(item: factory.makeCantata()[0])
+        XCTAssertEqual(vm.currentCoin(), 500)
+    }
+    
+    func test_5000원투입후_칸타타콜라사먹고_남은품목28개() throws {
+        vm.pushCoin(of: 5000)
+        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
+        let _ = vm.buyBeverage(item: factory.makeCantata()[0])
+        let count = vm.stockToDictionary().reduce(0) {
+            $0 + $1.value
         }
+        XCTAssertEqual(count, 28)
     }
+
+
 
 }
