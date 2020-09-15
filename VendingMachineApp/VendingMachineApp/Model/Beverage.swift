@@ -58,6 +58,13 @@ extension Beverage: Hashable {
     }
 }
 
+extension Beverage: Comparable {
+    
+    static func < (lhs: Beverage, rhs: Beverage) -> Bool {
+        return lhs.name == rhs.name ? lhs.brand < rhs.brand : lhs.name < rhs.name
+    }
+}
+
 extension Date {
     func yyyymmdd() -> String {
         let formatter = DateFormatter()
