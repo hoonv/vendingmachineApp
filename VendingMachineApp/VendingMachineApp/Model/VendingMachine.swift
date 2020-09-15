@@ -8,6 +8,45 @@
 
 import Foundation
 
+struct VendingMachine {
+
+    private var coin: Int = 0 {
+        didSet {
+            NotificationCenter.default.post(name: .didChangedCoin, object: coin)
+        }
+    }
+    private var items: [BeverageLine] = []
+    
+    init(items: [Beverage] = []) {
+        items.forEach {
+            addStockBeverage(item: $0)
+        }
+    }
+    
+    mutating func addStockBeverages(items: [Beverage]) {
+        items.forEach {
+            addStockBeverage(item: $0)
+        }
+    }
+    
+    mutating func removeCoin(of amount: Int) {
+        coin -= amount
+    }
+    
+    func stockToDictionary() -> [Beverage: Int] {
+        return items.reduce(into: [Beverage: Int]()) { $0[$1.sample] = $1.count }
+    }
+    
+    func stockToSortedTuple() -> [(Beverage, Int)] {
+        return items.map { ($0.sample, $0.count) }
+                    .sorted { $0 < $1 }
+    }
+}
+
+extension Notification.Name {
+    static let didChangedCoin = Notification.Name.init("didChanged")
+}
+
 protocol MachineManageable {
     
     func removeStockBeverage(item: Beverage)
@@ -22,29 +61,6 @@ protocol Salable {
     mutating func pushCoin(of: Int)
 }
 
-struct VendingMachine {
-
-    private var coin: Int = 0
-    private var items: [BeverageLine] = []
-    
-    init(items: [Beverage] = []) {
-        items.forEach {
-            addStockBeverage(item: $0)
-        }
-    }
-    
-    mutating func addStockBeverages(items: [Beverage]) {
-        items.forEach { addStockBeverage(item: $0) }
-    }
-    
-    mutating func removeCoin(of amount: Int) {
-        coin -= amount
-    }
-    
-    func stockToDictionary() -> [Beverage: Int] {
-        return items.reduce(into: [Beverage: Int]()) { $0[$1.sample] = $1.count }
-    }
-}
 
 extension VendingMachine: MachineManageable {
     
