@@ -17,10 +17,15 @@ class Soda: Beverage, CalorieCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
     
-    init(beverage: Beverage, calorie: Int) {
-        calorieContent = calorie
-        super.init(beverage: beverage)
+    func isHighCalorie() -> Bool {
+        return calorieContent > 10
     }
+    
+    func isLowCalorie() -> Bool {
+        return calorieContent < 10
+    }
+
+
 }
 
 final class Coke: Soda, SugarCheckable {
@@ -32,9 +37,12 @@ final class Coke: Soda, SugarCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, calorie: calorie)
     }
     
-    init(beverage: Beverage, calorie: Int, sugar: Int) {
-        sugarContent = sugar
-        super.init(beverage: beverage, calorie: calorie)
+    func isHighSugar() -> Bool {
+        return sugarContent > 10
+    }
+    
+    func isLowSugar() -> Bool {
+        return sugarContent < 10
     }
 }
 
@@ -48,8 +56,11 @@ final class Cider: Soda, SugarCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, calorie: calorie)
     }
     
-    init(beverage: Beverage, calorie: Int, sugar: Int) {
-        sugarContent = sugar
-        super.init(beverage: beverage, calorie: calorie)
+    func isHighSugar() -> Bool {
+        return sugarContent > 10
+    }
+    
+    func isLowSugar() -> Bool {
+        return sugarContent < 10
     }
 }

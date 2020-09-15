@@ -21,10 +21,12 @@ class Milk: Beverage, MilkCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
     
-    init(beverage: Beverage, milk: Int) {
-        expiration = Date(timeIntervalSinceNow: TimeInterval(Milk.secondInDay * Milk.bestDays))
-        milkContent = milk
-        super.init(beverage: beverage)
+    func isHighMilk() -> Bool {
+        return milkContent > 10
+    }
+    
+    func isLowMilk() -> Bool {
+        return milkContent < 10
     }
 }
 
@@ -37,9 +39,12 @@ final class ChocoMilk: Milk, SugarCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, milk: milk)
     }
     
-    init(beverage: Beverage, milk: Int, sugar: Int) {
-        sugarContent = sugar
-        super.init(beverage: beverage, milk: milk)
+    func isHighSugar() -> Bool {
+        return sugarContent > 10
+    }
+    
+    func isLowSugar() -> Bool {
+        return sugarContent < 10
     }
 }
 
@@ -52,8 +57,11 @@ final class StrawberryMilk: Milk, FatCheckable {
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, milk: milk)
     }
     
-    init(beverage: Beverage, milk: Int, fat: Int) {
-        fatContent = fat
-        super.init(beverage: beverage, milk: milk)
+    func isHighFat() -> Bool {
+        return fatContent > 10
+    }
+    
+    func isLowFat() -> Bool {
+        return fatContent < 10
     }
 }

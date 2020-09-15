@@ -8,32 +8,40 @@
 
 import Foundation
 
-struct VendingMachine {
-
-    private var coin: Int
-}
-
 protocol MachineManageable {
     
-    func addStockBeverage()
-    func removeStockBeverage()
+    func addStockBeverage(new: Beverage)
+    func removeStockBeverage(of: Beverage)
     func expiredBeverage()
 }
 
 protocol Salable {
     
-    func checkBalance()
-    func buyBeverage()
-    func availableBeverage()
+    func checkCoin() -> Int
+    func buyBeverage() -> Beverage
+    func availableBeverage() -> [Beverage]
+    mutating func pushCoin(of coin: Int)
 }
+
+struct VendingMachine {
+
+    private var coin: Int
+    private var items: [Beverage: Int]
+    
+    init() {
+        coin = 0
+        items = [:]
+    }
+}
+
 
 extension VendingMachine: MachineManageable {
     
-    func addStockBeverage() {
+    func addStockBeverage(new: Beverage) {
         
     }
     
-    func removeStockBeverage() {
+    func removeStockBeverage(of bever: Beverage) {
         
     }
     
@@ -43,17 +51,21 @@ extension VendingMachine: MachineManageable {
 }
 
 
+
 extension VendingMachine: Salable {
     
-    func checkBalance() {
+    mutating func pushCoin(of coin: Int) {
+        self.coin += coin
+    }
+    
+    func checkCoin() -> Int {
+        return coin
+    }
+    
+    func buyBeverage() -> Beverage {
         
     }
     
-    func buyBeverage() {
-        
-    }
-    
-    func availableBeverage() {
-        
+    func availableBeverage() -> [Beverage] {
     }
 }
