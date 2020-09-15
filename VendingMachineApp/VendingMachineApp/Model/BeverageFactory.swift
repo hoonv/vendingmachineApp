@@ -16,7 +16,7 @@ class BeverageFactory {
                  name: "캔코카콜라", date: Date(), calorie: 200, sugar: 50) }
     }
     
-    public func makeFanta(count: Int = 1) -> [Beverage] {
+    public func makeCider(count: Int = 1) -> [Beverage] {
         return  (0..<count).map { _ in
             Cider(brand: "칠성사이다", capacity: 350, price: 2000,
                   name: "칠성사이다", date: Date(), calorie: 200, sugar: 50) }
