@@ -13,7 +13,7 @@ class Milk: Beverage, MilkCheckable {
     private static let secondInDay = 86400
     private static let bestDays = 30
     private let expiration: Date
-    internal let milkContent: Int
+    let milkContent: Int
 
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int) {
         expiration = Date(timeIntervalSinceNow: TimeInterval(Milk.secondInDay * Milk.bestDays))
@@ -32,7 +32,7 @@ class Milk: Beverage, MilkCheckable {
 
 final class ChocoMilk: Milk, SugarCheckable {
     
-    internal let sugarContent: Int
+    let sugarContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int, sugar: Int) {
         sugarContent = sugar
@@ -50,7 +50,7 @@ final class ChocoMilk: Milk, SugarCheckable {
 
 final class StrawberryMilk: Milk, FatCheckable {
     
-    internal let fatContent: Int
+    let fatContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, milk: Int, fat: Int) {
         fatContent = fat

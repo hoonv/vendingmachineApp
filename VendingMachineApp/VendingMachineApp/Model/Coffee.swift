@@ -10,7 +10,7 @@ import Foundation
 
 class Coffee: Beverage, CaffeineCheckable {
     
-    internal let caffeineContent: Int
+    let caffeineContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int) {
         caffeineContent = caffeine
@@ -28,7 +28,7 @@ class Coffee: Beverage, CaffeineCheckable {
 
 final class Cantata: Coffee, SugarCheckable {
     
-    internal let sugarContent: Int
+    let sugarContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int, sugar: Int) {
         sugarContent = sugar
@@ -42,12 +42,11 @@ final class Cantata: Coffee, SugarCheckable {
     func isLowSugar() -> Bool {
         return sugarContent < 10
     }
-    
 }
 
 final class Georgia: Coffee, MilkCheckable {
 
-    internal let milkContent: Int
+    let milkContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, caffeine: Int, milk: Int) {
         milkContent = milk

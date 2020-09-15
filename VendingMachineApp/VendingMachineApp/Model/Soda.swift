@@ -10,7 +10,7 @@ import Foundation
 
 class Soda: Beverage, CalorieCheckable {
     
-    internal let calorieContent: Int
+    let calorieContent: Int
         
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, calorie: Int) {
         calorieContent = calorie
@@ -30,7 +30,7 @@ class Soda: Beverage, CalorieCheckable {
 
 final class Coke: Soda, SugarCheckable {
     
-    internal let sugarContent: Int
+    let sugarContent: Int
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, calorie: Int, sugar: Int) {
         sugarContent = sugar
@@ -49,7 +49,7 @@ final class Coke: Soda, SugarCheckable {
 
 final class Cider: Soda, SugarCheckable {
     
-    internal let sugarContent: Int
+    let sugarContent: Int
 
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, calorie: Int, sugar: Int) {
         sugarContent = sugar
