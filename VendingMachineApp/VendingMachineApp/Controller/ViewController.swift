@@ -83,6 +83,7 @@ class ViewController: UIViewController {
             idxToItem[idx] = item.0
         }
     }
+    
     private func setupLabels() {
         let items = machine.stockToSortedTuple()
         items.forEach {

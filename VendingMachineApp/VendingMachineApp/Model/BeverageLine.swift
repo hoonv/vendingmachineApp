@@ -8,10 +8,6 @@
 
 import Foundation
 
-extension Notification.Name {
-    static let didChangeBeverage = Notification.Name.init("changedBeverage")
-}
-
 class BeverageLine {
     
     private(set) var sample: Beverage
@@ -54,3 +50,9 @@ class BeverageLine {
         items.append(new)
     }
 }
+
+extension Notification.Name {
+    
+    static let didChangeBeverage = Notification.Name.init("changedBeverage")
+}
+
