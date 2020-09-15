@@ -8,10 +8,19 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let didChangeBeverage = Notification.Name.init("changedBeverage")
+}
+
 class BeverageLine {
     
     private(set) var sample: Beverage
-    private var items: [Beverage]
+    private var items: [Beverage] {
+        didSet {
+            let object: [String : Any] = ["sample": sample, "count": count]
+            NotificationCenter.default.post(name: .didChangeBeverage, object: object)
+        }
+    }
     var count: Int { return items.count }
     
     init(sample: Beverage, items: [Beverage] = []) {
