@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BeverageLine {
+class ProductLine {
     
     private(set) var sample: Beverage
     private var items: [Beverage] {
@@ -18,26 +18,23 @@ class BeverageLine {
         }
     }
     var count: Int { return items.count }
+    var isEmpty: Bool { return items.isEmpty }
     
     init(sample: Beverage, items: [Beverage] = []) {
         self.sample = sample
         self.items = items
     }
     
-    func isEmpty() -> Bool {
-        return items.isEmpty
+    func isAvailableToAppend(item: Beverage) -> Bool {
+        return sample == item
     }
     
-    func isEqualToSample(another: Beverage) -> Bool {
-        return sample == another
-    }
-    
-    func canBuy(coin: Int) -> Bool{
-        return coin >= sample.price && !isEmpty()
+    func isAvailableToSell(amount: Int) -> Bool{
+        return amount >= sample.price && !isEmpty
     }
     
     func popFirst() -> Beverage? {
-        if isEmpty() { return nil }
+        if isEmpty { return nil }
         return items.removeFirst()
     }
     
@@ -45,9 +42,9 @@ class BeverageLine {
         return items.popLast()
     }
     
-    func append(new: Beverage) {
-        guard new == sample else { return }
-        items.append(new)
+    func append(item: Beverage) {
+        guard item == sample else { return }
+        items.append(item)
     }
 }
 
