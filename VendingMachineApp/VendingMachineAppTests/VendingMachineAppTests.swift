@@ -15,9 +15,9 @@ class VendingMachineAppTests: XCTestCase {
     var factory = BeverageFactory()
     
     override func setUpWithError() throws {
-        vm.addStockBeverages(items: factory.makeCantata(count: 10)) // 2500원
-        vm.addStockBeverages(items: factory.makeCoke(count: 10)) // 2000원
-        vm.addStockBeverages(items: factory.makeChocoMilk(count: 10)) // 1500원
+        vm.addStockBeverages(items: factory.makeBeverages(kind: .cantata, count: 10)) // 2500원
+        vm.addStockBeverages(items: factory.makeBeverages(kind: .coke, count: 10)) // 2000원
+        vm.addStockBeverages(items: factory.makeBeverages(kind: .chocoMilk, count: 10)) // 1500원
     }
 
     override func tearDownWithError() throws {
@@ -41,33 +41,30 @@ class VendingMachineAppTests: XCTestCase {
     
     func test_1500원투입후_초코우유사먹고_0원확인() throws {
         vm.pushCoin(of: 1500)
-        let _ = vm.buyBeverage(item: factory.makeChocoMilk()[0])
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .chocoMilk))
         XCTAssertEqual(vm.currentCoin(), 0)
     }
 
     func test_1500원투입후_콜라사먹으려하지만_실패해서_돈그대로() throws {
         vm.pushCoin(of: 1500)
-        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .coke))
         XCTAssertEqual(vm.currentCoin(), 1500)
     }
     
     func test_5000원투입후_칸타타콜라사먹고_남은돈500원() throws {
         vm.pushCoin(of: 5000)
-        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
-        let _ = vm.buyBeverage(item: factory.makeCantata()[0])
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .cantata))
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .coke))
         XCTAssertEqual(vm.currentCoin(), 500)
     }
     
     func test_5000원투입후_칸타타콜라사먹고_남은품목28개() throws {
         vm.pushCoin(of: 5000)
-        let _ = vm.buyBeverage(item: factory.makeCoke()[0])
-        let _ = vm.buyBeverage(item: factory.makeCantata()[0])
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .coke))
+        let _ = vm.buyBeverage(item: factory.makeBeverage(kind: .cantata))
         let count = vm.stockToDictionary().reduce(0) {
             $0 + $1.value
         }
         XCTAssertEqual(count, 28)
     }
-
-
-
 }

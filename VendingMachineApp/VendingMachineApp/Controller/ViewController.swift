@@ -22,6 +22,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var oneTousand: UIButton!
     @IBOutlet weak var currentCoin: UILabel!
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        NotificationCenter.default.addObserver(self, selector: #selector(changedCoin),
+                                               name: .didChangedCoin, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changedBeverage),
+                                               name: .didChangeBeverage, object: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMachine()
@@ -29,10 +36,7 @@ class ViewController: UIViewController {
         setupLabels()
         setupImages()
         setupButtons()
-        NotificationCenter.default.addObserver(self, selector: #selector(changedCoin),
-                                               name: .didChangedCoin, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(changedBeverage),
-                                               name: .didChangeBeverage, object: nil)
+        print(machine.stockToSortedTuple())
     }
     
     @objc private func changedCoin(sender: Notification) {
@@ -96,12 +100,28 @@ class ViewController: UIViewController {
         let items = machine.stockToSortedTuple()
         items.forEach {
             guard let idx = itemToIdx[$0.0] else { return }
-            imageViews[idx].image = classifyNameToImage(item: $0.0)
+            imageViews[idx].image = $0.0.convertToUIImage()
         }
     }
     
-    private func classifyNameToImage(item: Beverage) -> UIImage? {
-        switch item {
+    private func setupMachine() {
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .cantata, count: 4))
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .chocoMilk, count: 1))
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .cider, count: 1))
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .coke, count: 1))
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .georgia, count: 1))
+        machine.addStockBeverages(items: factory.makeBeverages(kind: .strawberryMilk, count: 1))
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+
+extension Beverage {
+    fileprivate func convertToUIImage() -> UIImage? {
+        switch self {
         case _ as Coke:
             return UIImage(named: "coke.png")
         case _ as Cider:
@@ -117,18 +137,5 @@ class ViewController: UIViewController {
         default:
             return UIImage(named: "")
         }
-    }
-    
-    private func setupMachine() {
-        machine.addStockBeverages(items: factory.makeCantata(count: 1))
-        machine.addStockBeverages(items: factory.makeChocoMilk(count: 3))
-        machine.addStockBeverages(items: factory.makeStrawberryMilk(count: 5))
-        machine.addStockBeverages(items: factory.makeGeorgia(count: 5))
-        machine.addStockBeverages(items: factory.makeCider(count: 10))
-        machine.addStockBeverages(items: factory.makeCoke(count: 5))
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }
