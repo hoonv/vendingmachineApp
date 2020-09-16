@@ -24,8 +24,6 @@ class Soda: Beverage, CalorieCheckable {
     func isLowCalorie() -> Bool {
         return calorieContent < 10
     }
-
-
 }
 
 final class Coke: Soda, SugarCheckable {

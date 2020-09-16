@@ -12,7 +12,6 @@ class ViewController: UIViewController {
 
     private var machine = VendingMachine()
     private var factory = BeverageFactory()
-    private var itemToIdx: [Beverage: Int] = [:]
     private var idxToItem: [Int: Beverage] = [:]
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var imageViews: [UIImageView]!
@@ -24,9 +23,9 @@ class ViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        NotificationCenter.default.addObserver(self, selector: #selector(changedCoin),
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangedCoin),
                                                name: .didChangedCoin, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(changedBeverage),
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangedBeverage),
                                                name: .didChangeBeverage, object: nil)
     }
     override func viewDidLoad() {
@@ -36,39 +35,37 @@ class ViewController: UIViewController {
         setupLabels()
         setupImages()
         setupButtons()
-        print(machine.stockToSortedTuple())
     }
     
-    @objc private func changedCoin(sender: Notification) {
+    @objc private func didChangedCoin(sender: Notification) {
         if let coin = sender.object as? Int {
             currentCoin.text = "\(coin)원"
         }
     }
     
-    @objc private func changedBeverage(sender: Notification) {
+    @objc private func didChangedBeverage(sender: Notification) {
         guard let object = sender.object as? [String: Any] else { return }
         guard let sample = object["sample"] as? Beverage else { return }
         guard let count = object["count"] as? Int else { return }
-        guard let idx = itemToIdx[sample] else { return }
+        guard let idx = machine.findIndex(beverage: sample) else { return }
         labels[idx].text = "\(count)개"
     }
     
     @IBAction func oneTouched(_ sender: Any) {
-        machine.pushCoin(of: 1000)
+        machine.receiveBalance(coin: 1000)
     }
     
     @IBAction func fiveTouched(_ sender: Any) {
-        machine.pushCoin(of: 5000)
+        machine.receiveBalance(coin: 5000)
     }
     
     @IBAction func addTouched(_ sender: UIButton) {
         guard let item = idxToItem[sender.tag] else { return }
-        machine.addStockBeverage(item: item)
+        machine.addProduct(beverage: item)
     }
     
     @IBAction func buyTouched(_ sender: UIButton) {
-        guard let item = idxToItem[sender.tag] else { return }
-        let _ = machine.buyBeverage(item: item)
+        let _ = machine.receiveOrder(index: sender.tag) 
     }
     
     private func setupButtons() {
@@ -81,36 +78,33 @@ class ViewController: UIViewController {
     }
     
     private func setupIdx() {
-        let items = machine.stockToSortedTuple()
+        let items = machine.productState()
         items.enumerated().forEach { (idx, item) in
-            itemToIdx[item.0] = idx
             idxToItem[idx] = item.0
         }
     }
     
     private func setupLabels() {
-        let items = machine.stockToSortedTuple()
-        items.forEach {
-            guard let idx = itemToIdx[$0.0] else { return }
-            labels[idx].text = "\($0.1)개"
+        let items = machine.productState()
+        items.enumerated().forEach { (idx, value) in
+            labels[idx].text = "\(value.1)개"
         }
     }
     
     private func setupImages() {
-        let items = machine.stockToSortedTuple()
-        items.forEach {
-            guard let idx = itemToIdx[$0.0] else { return }
-            imageViews[idx].image = $0.0.convertToUIImage()
+        let items = machine.productState()
+        items.enumerated().forEach { (idx, value) in
+            imageViews[idx].image = value.0.convertToUIImage()
         }
     }
     
     private func setupMachine() {
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .cantata, count: 4))
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .chocoMilk, count: 1))
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .cider, count: 1))
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .coke, count: 1))
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .georgia, count: 1))
-        machine.addStockBeverages(items: factory.makeBeverages(kind: .strawberryMilk, count: 1))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .cantata, count: 4))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .chocoMilk, count: 4))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .cider, count: 4))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .coke, count: 4))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .georgia, count: 4))
+        machine.addProducts(beverages: factory.makeBeverages(kind: .strawberryMilk, count: 4))
     }
     
     deinit {

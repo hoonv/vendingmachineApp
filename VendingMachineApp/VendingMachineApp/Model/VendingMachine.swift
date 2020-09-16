@@ -9,101 +9,59 @@
 import Foundation
 
 struct VendingMachine {
+    
+    private let manager: ProductManager
+    private let balance: Balance
+    
+    init() {
+        balance = Balance()
+        manager = ProductManager()
+    }
+    
+    public func currentBalance() -> Int {
+        return balance.amount
+    }
+    
+    public func receiveBalance(coin: Int) {
+        balance.deposit(amount: coin)
+    }
+    
+    public func receiveBalance(bill: Int) {
+        balance.deposit(amount: bill)
+    }
 
-    private var coin: Int = 0 {
-        didSet {
-            NotificationCenter.default.post(name: .didChangedCoin, object: coin)
-        }
+    public func returnAllBalance() -> Int {
+        return balance.withdrawAll()
     }
-    private var items: [BeverageLine] = []
-    
-    init(items: [Beverage] = []) {
-        items.forEach {
-            addStockBeverage(item: $0)
-        }
-    }
-    
-    mutating func addStockBeverages(items: [Beverage]) {
-        items.forEach {
-            addStockBeverage(item: $0)
-        }
-    }
-    
-    mutating func removeCoin(of amount: Int) {
-        coin -= amount
-    }
-    
-    func stockToDictionary() -> [Beverage: Int] {
-        return items.reduce(into: [Beverage: Int]()) { $0[$1.sample] = $1.count }
-    }
-    
-    func stockToSortedTuple() -> [(Beverage, Int)] {
-        return items.map { ($0.sample, $0.count) }
-                    .sorted { $0 < $1 }
-    }
-}
 
-extension Notification.Name {
-    static let didChangedCoin = Notification.Name.init("didChanged")
-}
-
-protocol MachineManageable {
-    
-    func removeStockBeverage(item: Beverage)
-    mutating func addStockBeverage(item: Beverage)
-}
-
-protocol Salable {
-    
-    func currentCoin() -> Int
-    func canBuy() -> [Beverage]
-    mutating func buyBeverage(item: Beverage) -> Beverage?
-    mutating func pushCoin(of: Int)
-}
-
-
-extension VendingMachine: MachineManageable {
-    
-    func removeStockBeverage(item: Beverage) {
-        let filtered = items.filter { $0.isEqualToSample(another: item) }
-        if let first = filtered.first {
-            let _ = first.popLast()
-        }
+    public func receiveOrder(index: Int) -> Beverage? {
+        guard let item = manager.receiveOrder(index: index, amount: balance.amount)
+            else { return nil }
+        let _ = balance.withdraw(amount: item.price)
+        return item
     }
     
-    mutating func addStockBeverage(item: Beverage) {
-        let filtered = items.filter { $0.isEqualToSample(another: item) }
-        if let first = filtered.first {
-            first.append(new: item)
-        } else {
-            items.append(BeverageLine(sample: item, items: [item]))
-        }
-    }
-}
-
-extension VendingMachine: Salable {
-    
-    func currentCoin() -> Int {
-        return coin
+    public func addProduct(beverage: Beverage) {
+        manager.addProduct(beverage: beverage)
     }
     
-    func canBuy() -> [Beverage] {
-        return items.filter{ $0.canBuy(coin: coin) }
-                    .map { $0.sample }
+    public func addProducts(beverages: [Beverage]) {
+        manager.addProducts(beverages: beverages)
     }
     
-    mutating func pushCoin(of amount: Int) {
-        coin += amount
+    public func removeProduct(index: Int) {
+        manager.removeProduct(index: index)
     }
     
-    mutating func buyBeverage(item: Beverage) -> Beverage? {
-        let filtered = items.filter {
-            $0.isEqualToSample(another: item) && $0.canBuy(coin: coin)
-        }
-        if let new = filtered.first?.popFirst() {
-            removeCoin(of: new.price)
-            return new
-        }
-        return nil
+    public func productState() -> [(Beverage, Int)] {
+        return manager.productState()
+    }
+    
+    public func findIndex(beverage: Beverage) -> Int? {
+        return manager.findIndex(beverage: beverage)
+    }
+    
+    public func isAvailableProductsToSell() -> [Beverage] {
+        return manager.isAvailableProductsToSell(amount: balance.amount)
     }
 }
