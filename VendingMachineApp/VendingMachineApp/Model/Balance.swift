@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Balance {
+class Balance: Codable {
     
     private(set) var amount: Int {
         didSet {
@@ -21,6 +21,7 @@ class Balance {
     }
     
     func deposit(amount: Int) {
+        guard self.amount >= 0 else { return }
         self.amount += amount
     }
     

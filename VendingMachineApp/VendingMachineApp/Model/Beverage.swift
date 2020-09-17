@@ -8,13 +8,21 @@
 
 import Foundation
 
-class Beverage {
+class Beverage: Codable {
         
     private let brand: String
     private let capacity: Int
     private(set) var price: Int
-    private let name: String
+    private(set) var name: String
     private let manufacture: Date
+    
+    enum CodingKeys: String, CodingKey {
+        case brand
+        case capacity
+        case price
+        case name
+        case manufacture
+    }
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date) {
         self.brand = brand
@@ -24,12 +32,23 @@ class Beverage {
         self.manufacture = date
     }
     
-    init(beverage: Beverage) {
-        self.brand = beverage.brand
-        self.capacity = beverage.capacity
-        self.price = beverage.price
-        self.name = beverage.name
-        self.manufacture = beverage.manufacture
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        brand = try values.decode(String.self, forKey: .brand)
+        capacity = try values.decode(Int.self, forKey: .capacity)
+        price = try values.decode(Int.self, forKey: .price)
+        name = try values.decode(String.self, forKey: .name)
+        manufacture = try values.decode(Date.self, forKey: .manufacture)
+
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(brand, forKey: .brand)
+        try container.encode(capacity, forKey: .capacity)
+        try container.encode(price, forKey: .price)
+        try container.encode(name, forKey: .name)
+        try container.encode(manufacture, forKey: .manufacture)
     }
 }
 

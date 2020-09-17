@@ -8,12 +8,21 @@
 
 import Foundation
 
-class ProductManager {
+class ProductManager: Codable {
     
     private var lines: [ProductLine]
     
     init() {
         lines = []
+    }
+    
+    func setupSample() {
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .cantata)))
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .chocoMilk)))
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .cider)))
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .coke)))
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .georgia)))
+        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .strawberryMilk)))
     }
     
     func addProduct(beverage: Beverage) {

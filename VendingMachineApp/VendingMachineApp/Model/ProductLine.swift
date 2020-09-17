@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ProductLine {
+class ProductLine: Codable {
     
     private(set) var sample: Beverage
     private var items: [Beverage] {

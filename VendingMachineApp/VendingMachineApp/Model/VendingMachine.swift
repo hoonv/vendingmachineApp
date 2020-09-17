@@ -8,14 +8,21 @@
 
 import Foundation
 
-struct VendingMachine {
+struct VendingMachine: Codable {
     
     private let manager: ProductManager
     private let balance: Balance
+    private let history: SellHistory
     
     init() {
         balance = Balance()
         manager = ProductManager()
+        history = SellHistory()
+        setupSample()
+    }
+    
+    private func setupSample() {
+        manager.setupSample()
     }
     
     public func currentBalance() -> Int {
@@ -38,6 +45,7 @@ struct VendingMachine {
         guard let item = manager.receiveOrder(index: index, amount: balance.amount)
             else { return nil }
         let _ = balance.withdraw(amount: item.price)
+        history.append(beverage: item)
         return item
     }
     
@@ -65,3 +73,5 @@ struct VendingMachine {
         return manager.isAvailableProductsToSell(amount: balance.amount)
     }
 }
+
+
