@@ -10,7 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var machine = VendingMachine()
+    private var machine: VendingMachine {
+        let sceneDelegate = UIApplication.shared.connectedScenes
+            .first!.delegate as! SceneDelegate
+        return sceneDelegate.vendingMachine!
+    }
     private var factory = BeverageFactory()
     private var idxToItem: [Int: Beverage] = [:]
     @IBOutlet var labels: [UILabel]!
@@ -23,21 +27,27 @@ class ViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangedCoin),
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangedBalance),
                                                name: .didChangedCoin, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedBeverage),
                                                name: .didChangeBeverage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(historyDidChanged),
+                                               name: .historyDidChanged, object: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMachine()
         setupIdx()
         setupLabels()
         setupImages()
         setupButtons()
     }
+    @objc private func historyDidChanged(sender: Notification) {
+        if let purchasedItem = sender.object as? [Beverage] {
+            print(purchasedItem)
+        }
+    }
     
-    @objc private func didChangedCoin(sender: Notification) {
+    @objc private func didChangedBalance(sender: Notification) {
         if let coin = sender.object as? Int {
             currentCoin.text = "\(coin)원"
         }
@@ -89,6 +99,7 @@ class ViewController: UIViewController {
         items.enumerated().forEach { (idx, value) in
             labels[idx].text = "\(value.1)개"
         }
+        currentCoin.text = "\(machine.currentBalance())원"
     }
     
     private func setupImages() {
@@ -96,15 +107,6 @@ class ViewController: UIViewController {
         items.enumerated().forEach { (idx, value) in
             imageViews[idx].image = value.0.convertToUIImage()
         }
-    }
-    
-    private func setupMachine() {
-        machine.addProducts(beverages: factory.makeBeverages(kind: .cantata, count: 4))
-        machine.addProducts(beverages: factory.makeBeverages(kind: .chocoMilk, count: 4))
-        machine.addProducts(beverages: factory.makeBeverages(kind: .cider, count: 4))
-        machine.addProducts(beverages: factory.makeBeverages(kind: .coke, count: 4))
-        machine.addProducts(beverages: factory.makeBeverages(kind: .georgia, count: 4))
-        machine.addProducts(beverages: factory.makeBeverages(kind: .strawberryMilk, count: 4))
     }
     
     deinit {
@@ -115,18 +117,18 @@ class ViewController: UIViewController {
 
 extension Beverage {
     fileprivate func convertToUIImage() -> UIImage? {
-        switch self {
-        case _ as Coke:
+        switch self.name {
+        case "캔코카콜라":
             return UIImage(named: "coke.png")
-        case _ as Cider:
+        case "칠성사이다":
             return UIImage(named: "cider.png")
-        case _ as StrawberryMilk:
+        case "딸기우유":
             return UIImage(named: "strawberry.png")
-        case _ as ChocoMilk:
+        case "서울초코우유":
             return UIImage(named: "choco.png")
-        case _ as Cantata:
+        case "칸타타커피":
             return UIImage(named: "cantata.png")
-        case _ as Georgia:
+        case "조지아커피":
             return UIImage(named: "georgia.png")
         default:
             return UIImage(named: "")
