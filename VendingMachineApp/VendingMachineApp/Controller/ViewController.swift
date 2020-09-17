@@ -19,13 +19,16 @@ class ViewController: UIViewController {
     private var factory = BeverageFactory()
     private var idxToItem: [Int: Beverage] = [:]
     private var historyImageViwes: [UIImageView] = []
-    @IBOutlet var labels: [UILabel]!
     @IBOutlet var imageViews: [UIImageView]!
-    @IBOutlet var addButtons: [UIButton]!
-    @IBOutlet var buyButtons: [UIButton]!
+
     @IBOutlet weak var fiveTousand: UIButton!
     @IBOutlet weak var oneTousand: UIButton!
     @IBOutlet weak var currentCoin: UILabel!
+    
+    
+    @IBOutlet var pushButtons: [UIButton]!
+    
+
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -45,6 +48,7 @@ class ViewController: UIViewController {
         setupLabels()
         setupImages()
         setupButtons()
+        setupPushButton()
     }
     
     @objc private func multipleOfTen(sender: Notification) {
@@ -77,15 +81,12 @@ class ViewController: UIViewController {
     @objc private func didChangedBalance(sender: Notification) {
         if let coin = sender.object as? Int {
             currentCoin.text = "\(coin)원"
+            setupPushButton()
         }
     }
     
     @objc private func didChangedBeverage(sender: Notification) {
-        guard let object = sender.object as? [String: Any] else { return }
-        guard let sample = object["sample"] as? Beverage else { return }
-        guard let count = object["count"] as? Int else { return }
-        guard let idx = machine.findIndex(beverage: sample) else { return }
-        labels[idx].text = "\(count)개"
+        setupPushButton()
     }
     
     @IBAction func oneTouched(_ sender: Any) {
@@ -105,12 +106,22 @@ class ViewController: UIViewController {
         let _ = machine.receiveOrder(index: sender.tag) 
     }
     
+    
+    @IBAction func onTouchPushButtons(_ sender: UIButton) {
+        let _ = machine.receiveOrder(index: sender.tag)
+    }
+    
     private func setupButtons() {
-        addButtons.enumerated().forEach { (idx, value) in
+        pushButtons.enumerated().forEach { (idx, value) in
             value.tag = idx
         }
-        buyButtons.enumerated().forEach { (idx, value) in
-            value.tag = idx
+    }
+    
+    private func setupPushButton() {
+        let isAvailable = machine.isAvailableProductsToSell()
+        zip(pushButtons, isAvailable).forEach{ (button, check) in
+            let image = check ? UIImage(named: "on.png") : UIImage(named: "off.png")
+            button.setBackgroundImage(image, for: .normal)
         }
     }
     
@@ -122,10 +133,6 @@ class ViewController: UIViewController {
     }
     
     private func setupLabels() {
-        let items = machine.productState()
-        items.enumerated().forEach { (idx, value) in
-            labels[idx].text = "\(value.1)개"
-        }
         currentCoin.text = "\(machine.currentBalance())원"
     }
     
@@ -143,7 +150,7 @@ class ViewController: UIViewController {
 
 
 extension Beverage {
-    fileprivate func convertToUIImage() -> UIImage? {
+    func convertToUIImage() -> UIImage? {
         switch self.name {
         case "캔코카콜라":
             return UIImage(named: "coke.png")
