@@ -49,8 +49,8 @@ class ProductManager: Codable {
         return lines[index].popFirst()
     }
     
-    func isAvailableProductsToSell(amount: Int) -> [Beverage] {
-        return lines.filter { $0.isAvailableToSell(amount: amount) }.map { $0.sample }
+    func isAvailableProductsToSell(amount: Int) -> [Bool] {
+        return lines.map{ $0.isAvailableToSell(amount: amount) }
     }
     
     func productState() -> [(Beverage, Int)] {

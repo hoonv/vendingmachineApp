@@ -69,7 +69,7 @@ struct VendingMachine: Codable {
         return manager.findIndex(beverage: beverage)
     }
     
-    public func isAvailableProductsToSell() -> [Beverage] {
+    public func isAvailableProductsToSell() -> [Bool] {
         return manager.isAvailableProductsToSell(amount: balance.amount)
     }
     
