@@ -15,20 +15,14 @@ class ViewController: UIViewController {
             .first!.delegate as! SceneDelegate
         return sceneDelegate.vendingMachine!
     }
-    private var historyX = 20
-    private var factory = BeverageFactory()
-    private var idxToItem: [Int: Beverage] = [:]
+    private var historyXCoordinate = 20
     private var historyImageViwes: [UIImageView] = []
+    
     @IBOutlet var imageViews: [UIImageView]!
-
     @IBOutlet weak var fiveTousand: UIButton!
     @IBOutlet weak var oneTousand: UIButton!
     @IBOutlet weak var currentCoin: UILabel!
-    
-    
     @IBOutlet var pushButtons: [UIButton]!
-    
-
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -44,49 +38,40 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupIdx()
         setupLabels()
         setupImages()
         setupButtons()
-        setupPushButton()
+        setupPushButtonOnOff()
     }
     
     @objc private func multipleOfTen(sender: Notification) {
-        let alert = UIAlertController(title: "Your Title", message: "Your Message", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
-        let deleteAction = UIAlertAction(title: "delete", style: .destructive, handler: historyClear)
+        let alert = UIAlertController(title: "알림", message: "구매목록을 지우시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "OK", style: .default, handler: historyClear)
         alert.addAction(cancelAction)
         alert.addAction(deleteAction)
         present(alert, animated: true, completion: nil)
     }
     
-    func historyClear(action: UIAlertAction) {
-        machine.removeHistory()
-        historyImageViwes.forEach {
-            $0.removeFromSuperview()
-        }
-        historyX = 20
-    }
-    
     @objc private func historyDidChanged(sender: Notification) {
         if let purchasedItem = sender.object as? [Beverage] {
             let image = UIImageView(image: purchasedItem.last?.convertToUIImage())
-            image.frame = CGRect(x: historyX, y: 700, width: 90, height: 120)
+            image.frame = CGRect(x: historyXCoordinate, y: 720, width: 80, height: 100)
             historyImageViwes.append(image)
             self.view.addSubview(image)
-            historyX += 50
+            historyXCoordinate += 40
         }
     }
     
     @objc private func didChangedBalance(sender: Notification) {
         if let coin = sender.object as? Int {
             currentCoin.text = "\(coin)원"
-            setupPushButton()
+            setupPushButtonOnOff()
         }
     }
     
     @objc private func didChangedBeverage(sender: Notification) {
-        setupPushButton()
+        setupPushButtonOnOff()
     }
     
     @IBAction func oneTouched(_ sender: Any) {
@@ -95,17 +80,7 @@ class ViewController: UIViewController {
     
     @IBAction func fiveTouched(_ sender: Any) {
         machine.receiveBalance(coin: 5000)
-    }
-    
-    @IBAction func addTouched(_ sender: UIButton) {
-        guard let item = idxToItem[sender.tag] else { return }
-        machine.addProduct(beverage: item)
-    }
-    
-    @IBAction func buyTouched(_ sender: UIButton) {
-        let _ = machine.receiveOrder(index: sender.tag) 
-    }
-    
+    }    
     
     @IBAction func onTouchPushButtons(_ sender: UIButton) {
         let _ = machine.receiveOrder(index: sender.tag)
@@ -117,18 +92,11 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setupPushButton() {
+    private func setupPushButtonOnOff() {
         let isAvailable = machine.isAvailableProductsToSell()
         zip(pushButtons, isAvailable).forEach{ (button, check) in
             let image = check ? UIImage(named: "on.png") : UIImage(named: "off.png")
             button.setBackgroundImage(image, for: .normal)
-        }
-    }
-    
-    private func setupIdx() {
-        let items = machine.productState()
-        items.enumerated().forEach { (idx, item) in
-            idxToItem[idx] = item.0
         }
     }
     
@@ -141,6 +109,14 @@ class ViewController: UIViewController {
         items.enumerated().forEach { (idx, value) in
             imageViews[idx].image = value.0.convertToUIImage()
         }
+    }
+    
+    private func historyClear(action: UIAlertAction) {
+        machine.removeHistory()
+        historyImageViwes.forEach {
+            $0.removeFromSuperview()
+        }
+        historyXCoordinate = 20
     }
     
     deinit {

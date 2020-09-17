@@ -20,15 +20,18 @@ class ModalViewController: UIViewController {
     private var idxToItem: [Int: Beverage] = [:]
     @IBOutlet var labels: [UILabel]!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedBeverage),
                                                name: .didChangeBeverage, object: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setupIdx()
         setupButtons()
         setupLabels()
         setupImages()
-        
     }
     
     @objc private func didChangedBeverage(sender: Notification) {
