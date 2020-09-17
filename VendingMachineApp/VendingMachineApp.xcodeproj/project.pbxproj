@@ -10,6 +10,7 @@
 		E06CD40E25120CFD002D6E78 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD40D25120CFD002D6E78 /* Balance.swift */; };
 		E06CD41025121792002D6E78 /* ProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD40F25121792002D6E78 /* ProductManager.swift */; };
 		E06CD412251347BE002D6E78 /* SellHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD411251347BE002D6E78 /* SellHistory.swift */; };
+		E06CD41425136336002D6E78 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD41325136336002D6E78 /* ModalViewController.swift */; };
 		E0FCE910250F18A100851F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE90F250F18A100851F59 /* AppDelegate.swift */; };
 		E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE911250F18A100851F59 /* SceneDelegate.swift */; };
 		E0FCE914250F18A100851F59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE913250F18A100851F59 /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 		E06CD40D25120CFD002D6E78 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		E06CD40F25121792002D6E78 /* ProductManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManager.swift; sourceTree = "<group>"; };
 		E06CD411251347BE002D6E78 /* SellHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellHistory.swift; sourceTree = "<group>"; };
+		E06CD41325136336002D6E78 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		E0FCE90C250F18A100851F59 /* VendingMachineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VendingMachineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FCE90F250F18A100851F59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0FCE911250F18A100851F59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				E0FCE913250F18A100851F59 /* ViewController.swift */,
+				E06CD41325136336002D6E78 /* ModalViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0FCE939250F51B300851F59 /* Soda.swift in Sources */,
+				E06CD41425136336002D6E78 /* ModalViewController.swift in Sources */,
 				E0FCE914250F18A100851F59 /* ViewController.swift in Sources */,
 				E0FCE910250F18A100851F59 /* AppDelegate.swift in Sources */,
 				E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */,

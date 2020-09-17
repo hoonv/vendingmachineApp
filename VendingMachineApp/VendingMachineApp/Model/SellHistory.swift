@@ -22,6 +22,9 @@ class SellHistory: Codable {
     
     func append(beverage: Beverage) {
         items.append(beverage)
+        if items.count % 10 == 0 {
+            NotificationCenter.default.post(name: .mutipleOfTen, object: nil)
+        }
     }
     
     func clear() {
@@ -32,4 +35,5 @@ class SellHistory: Codable {
 extension Notification.Name {
     
     static let historyDidChanged = Notification.Name.init("historyDidChanged")
+    static let mutipleOfTen = Notification.Name.init("mutipleOfTen")
 }

@@ -15,8 +15,10 @@ class ViewController: UIViewController {
             .first!.delegate as! SceneDelegate
         return sceneDelegate.vendingMachine!
     }
+    private var historyX = 20
     private var factory = BeverageFactory()
     private var idxToItem: [Int: Beverage] = [:]
+    private var historyImageViwes: [UIImageView] = []
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var imageViews: [UIImageView]!
     @IBOutlet var addButtons: [UIButton]!
@@ -33,6 +35,9 @@ class ViewController: UIViewController {
                                                name: .didChangeBeverage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(historyDidChanged),
                                                name: .historyDidChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(multipleOfTen),
+                                               name: .mutipleOfTen, object: nil)
+
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +46,31 @@ class ViewController: UIViewController {
         setupImages()
         setupButtons()
     }
+    
+    @objc private func multipleOfTen(sender: Notification) {
+        let alert = UIAlertController(title: "Your Title", message: "Your Message", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "delete", style: .destructive, handler: historyClear)
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func historyClear(action: UIAlertAction) {
+        machine.removeHistory()
+        historyImageViwes.forEach {
+            $0.removeFromSuperview()
+        }
+        historyX = 20
+    }
+    
     @objc private func historyDidChanged(sender: Notification) {
         if let purchasedItem = sender.object as? [Beverage] {
-            print(purchasedItem)
+            let image = UIImageView(image: purchasedItem.last?.convertToUIImage())
+            image.frame = CGRect(x: historyX, y: 700, width: 90, height: 120)
+            historyImageViwes.append(image)
+            self.view.addSubview(image)
+            historyX += 50
         }
     }
     

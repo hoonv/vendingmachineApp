@@ -72,6 +72,10 @@ struct VendingMachine: Codable {
     public func isAvailableProductsToSell() -> [Beverage] {
         return manager.isAvailableProductsToSell(amount: balance.amount)
     }
+    
+    public func removeHistory() {
+        history.clear()
+    }
 }
 
 
