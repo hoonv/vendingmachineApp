@@ -10,6 +10,10 @@ import Foundation
 
 class BeverageFactory {
 
+    private init() {
+        
+    }
+    
     enum BeverageKind {
         case coke, cider, cantata, georgia, chocoMilk, strawberryMilk
     }
