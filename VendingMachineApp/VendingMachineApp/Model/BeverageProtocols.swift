@@ -11,39 +11,34 @@ import Foundation
 protocol SugarCheckable {
     
     var sugarContent: Int { get }
-    
-    func isHighSugar() -> Bool
-    func isLowSugar() -> Bool
+    var isHighSugar: Bool { get }
+    var isLowSugar: Bool { get }
 }
 
 protocol CalorieCheckable {
     
     var calorieContent: Int { get }
-    
-    func isHighCalorie() -> Bool
-    func isLowCalorie() -> Bool
+    var isHighCalorie: Bool { get }
+    var isLowCalorie: Bool { get }
 }
 
 protocol FatCheckable {
     
     var fatContent: Int { get }
-    
-    func isHighFat() -> Bool
-    func isLowFat() -> Bool
+    var isHighFat: Bool { get }
+    var isLowFat: Bool { get }
 }
 
 protocol CaffeineCheckable {
     
     var caffeineContent: Int { get }
-    
-    func isHighCaffeine() -> Bool
-    func isLowCaffeine() -> Bool
+    var isHighCaffeine: Bool { get }
+    var isLowCaffeine: Bool { get }
 }
 
 protocol MilkCheckable {
     
     var milkContent: Int { get }
-    
-    func isHighMilk() -> Bool
-    func isLowMilk() -> Bool
+    var isHighMilk: Bool { get }
+    var isLowMilk: Bool { get }
 }

@@ -11,6 +11,8 @@ import Foundation
 class Milk: Beverage, MilkCheckable {
 
     let milkContent: Int
+    var isHighMilk: Bool { milkContent > 10 }
+    var isLowMilk: Bool { milkContent < 10 }
 
     private enum CodingKeys: String, CodingKey {
         case milkContent
@@ -26,19 +28,13 @@ class Milk: Beverage, MilkCheckable {
         milkContent = try container.decode(Int.self, forKey: .milkContent)
         try super.init(from: decoder)
     }
-    
-    func isHighMilk() -> Bool {
-        return milkContent > 10
-    }
-    
-    func isLowMilk() -> Bool {
-        return milkContent < 10
-    }
 }
 
 final class ChocoMilk: Milk, SugarCheckable {
     
     let sugarContent: Int
+    var isHighSugar: Bool { sugarContent > 10 }
+    var isLowSugar: Bool { sugarContent < 10 }
     
     private enum CodingKeys: String, CodingKey {
         case sugarContent
@@ -54,19 +50,13 @@ final class ChocoMilk: Milk, SugarCheckable {
         sugarContent = try container.decode(Int.self, forKey: .sugarContent)
         try super.init(from: decoder)
     }
-    
-    func isHighSugar() -> Bool {
-        return sugarContent > 10
-    }
-    
-    func isLowSugar() -> Bool {
-        return sugarContent < 10
-    }
 }
 
 final class StrawberryMilk: Milk, FatCheckable {
     
     let fatContent: Int
+    var isHighFat: Bool { fatContent > 10 }
+    var isLowFat: Bool { fatContent < 10 }
     
     private enum CodingKeys: String, CodingKey {
         case fatContent
@@ -81,13 +71,5 @@ final class StrawberryMilk: Milk, FatCheckable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         fatContent = try container.decode(Int.self, forKey: .fatContent)
         try super.init(from: decoder)
-    }
-    
-    func isHighFat() -> Bool {
-        return fatContent > 10
-    }
-    
-    func isLowFat() -> Bool {
-        return fatContent < 10
     }
 }

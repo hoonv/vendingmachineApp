@@ -11,7 +11,9 @@ import Foundation
 class Soda: Beverage, CalorieCheckable {
     
     let calorieContent: Int
-        
+    var isHighCalorie: Bool { calorieContent > 10 }
+    var isLowCalorie: Bool { calorieContent < 10 }
+
     private enum CodingKeys: String, CodingKey {
         case calorieContent
     }
@@ -26,20 +28,14 @@ class Soda: Beverage, CalorieCheckable {
         calorieContent = try container.decode(Int.self, forKey: .calorieContent)
         try super.init(from: decoder)
     }
-    
-    func isHighCalorie() -> Bool {
-        return calorieContent > 10
-    }
-    
-    func isLowCalorie() -> Bool {
-        return calorieContent < 10
-    }
 }
 
 final class Coke: Soda, SugarCheckable {
     
     let sugarContent: Int
-    
+    var isHighSugar: Bool { sugarContent > 10 }
+    var isLowSugar: Bool { sugarContent < 10 }
+
     private enum CodingKeys: String, CodingKey {
         case sugarContent
     }
@@ -53,14 +49,6 @@ final class Coke: Soda, SugarCheckable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         sugarContent = try container.decode(Int.self, forKey: .sugarContent)
         try super.init(from: decoder)
-    }
-    
-    func isHighSugar() -> Bool {
-        return sugarContent > 10
-    }
-    
-    func isLowSugar() -> Bool {
-        return sugarContent < 10
     }
 }
 
@@ -68,6 +56,8 @@ final class Coke: Soda, SugarCheckable {
 final class Cider: Soda, SugarCheckable {
     
     let sugarContent: Int
+    var isHighSugar: Bool { sugarContent > 10 }
+    var isLowSugar: Bool { sugarContent < 10 }
 
     private enum CodingKeys: String, CodingKey {
         case sugarContent
@@ -82,13 +72,5 @@ final class Cider: Soda, SugarCheckable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         sugarContent = try container.decode(Int.self, forKey: .sugarContent)
         try super.init(from: decoder)
-    }
-    
-    func isHighSugar() -> Bool {
-        return sugarContent > 10
-    }
-    
-    func isLowSugar() -> Bool {
-        return sugarContent < 10
     }
 }
