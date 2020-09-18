@@ -11,9 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     private var machine: VendingMachine {
-        let sceneDelegate = UIApplication.shared.connectedScenes
-            .first!.delegate as! SceneDelegate
-        return sceneDelegate.vendingMachine!
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            return scene.vendingMachine
+        } else { return VendingMachine() }
     }
     private var historyXCoordinate = 20
     private var historyImageViwes: [UIImageView] = []
