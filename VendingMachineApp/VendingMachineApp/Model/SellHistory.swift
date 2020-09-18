@@ -10,7 +10,7 @@ import Foundation
 
 class SellHistory: Codable {
     
-    var items: [Beverage] {
+    private(set) var items: [Beverage] {
         didSet {
             NotificationCenter.default.post(name: .historyDidChanged, object: items)
         }
