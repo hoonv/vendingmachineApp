@@ -19,10 +19,16 @@ struct VendingMachine: Codable {
         manager = ProductManager()
         history = SellHistory()
         setupSample()
+        
     }
     
     private func setupSample() {
-        manager.setupSample()
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .cantata))
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .chocoMilk))
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .cider))
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .coke))
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .georgia))
+        addProduct(beverage: BeverageFactory.makeBeverage(kind: .strawberryMilk))
     }
     
     public func currentBalance() -> Int {

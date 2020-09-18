@@ -16,15 +16,6 @@ class ProductManager: Codable {
         lines = []
     }
     
-    func setupSample() {
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .cantata)))
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .chocoMilk)))
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .cider)))
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .coke)))
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .georgia)))
-        lines.append(ProductLine(sample: BeverageFactory.makeBeverage(kind: .strawberryMilk)))
-    }
-    
     func addProduct(beverage: Beverage) {
         let filtered = lines.filter { $0.isAvailableToAppend(item: beverage) }
         if let first = filtered.first {
