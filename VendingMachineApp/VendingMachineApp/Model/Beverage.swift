@@ -33,16 +33,6 @@ class Beverage: NSObject, NSCoding {
         self.manufacture = date
     }
     
-//    required init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        brand = try values.decode(String.self, forKey: .brand)
-//        capacity = try values.decode(Int.self, forKey: .capacity)
-//        price = try values.decode(Int.self, forKey: .price)
-//        name = try values.decode(String.self, forKey: .name)
-//        manufacture = try values.decode(Date.self, forKey: .manufacture)
-//
-//    }
-    
     required init?(coder: NSCoder) {
         brand = coder.decodeObject(forKey: Keys.brand.rawValue) as? String ?? ""
         capacity = coder.decodeInteger(forKey: Keys.capacity.rawValue)
@@ -59,16 +49,6 @@ class Beverage: NSObject, NSCoding {
         coder.encode(manufacture, forKey: Keys.manufacture.rawValue)
 
     }
-
-
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(brand, forKey: .brand)
-//        try container.encode(capacity, forKey: .capacity)
-//        try container.encode(price, forKey: .price)
-//        try container.encode(name, forKey: .name)
-//        try container.encode(manufacture, forKey: .manufacture)
-//    }
 }
 
 extension Beverage {
@@ -95,31 +75,6 @@ extension Beverage {
         return hasher.finalize()
     }
 }
-
-//extension Beverage {
-//
-//    static func == (lhs: Beverage, rhs: Beverage) -> Bool {
-//        return lhs.brand == rhs.brand && lhs.name == rhs.name
-//            && lhs.capacity == rhs.capacity && lhs.price == rhs.price
-//    }
-//}
-
-//extension Beverage: Hashable {
-//
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(brand)
-//        hasher.combine(name)
-//        hasher.combine(capacity)
-//        hasher.combine(price)
-//    }
-//}
-//
-//extension Beverage: Comparable {
-//
-//    static func < (lhs: Beverage, rhs: Beverage) -> Bool {
-//        return lhs.name == rhs.name ? lhs.brand < rhs.brand : lhs.name < rhs.name
-//    }
-//}
 
 extension Date {
     func toString(format: String) -> String {

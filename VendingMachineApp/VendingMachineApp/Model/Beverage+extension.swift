@@ -11,18 +11,18 @@ import UIKit
 
 extension Beverage {
     func convertToUIImage() -> UIImage? {
-        switch self.name {
-        case "캔코카콜라":
+        switch self {
+        case _ as Coke:
             return UIImage(named: "coke.png")
-        case "칠성사이다":
+        case _ as Cider:
             return UIImage(named: "cider.png")
-        case "딸기우유":
+        case _ as StrawberryMilk:
             return UIImage(named: "strawberry.png")
-        case "서울초코우유":
+        case _ as ChocoMilk:
             return UIImage(named: "choco.png")
-        case "칸타타커피":
+        case _ as Cantata:
             return UIImage(named: "cantata.png")
-        case "조지아커피":
+        case _ as Georgia:
             return UIImage(named: "georgia.png")
         default:
             return UIImage(named: "")
