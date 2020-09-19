@@ -8,19 +8,38 @@
 
 import Foundation
 
-struct VendingMachine: Codable {
+class VendingMachine: NSObject, NSCoding {
     
     private let manager: ProductManager
     private let balance: Balance
     private let history: SellHistory
     
-    init() {
+    private enum Keys: String {
+        case manager
+        case balance
+        case history
+    }
+    
+    override init() {
         balance = Balance()
         manager = ProductManager()
         history = SellHistory()
+        super.init()
         setupSample()
-        
     }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(manager, forKey: Keys.manager.rawValue)
+        coder.encode(balance, forKey: Keys.balance.rawValue)
+        coder.encode(history, forKey: Keys.history.rawValue)
+    }
+    
+    required init?(coder: NSCoder) {
+        manager = coder.decodeObject(forKey: Keys.manager.rawValue) as? ProductManager ?? ProductManager()
+        balance = coder.decodeObject(forKey: Keys.balance.rawValue) as? Balance ?? Balance()
+        history = coder.decodeObject(forKey: Keys.history.rawValue) as? SellHistory ?? SellHistory()
+    }
+
     
     private func setupSample() {
         addProduct(beverage: BeverageFactory.makeBeverage(kind: .cantata))

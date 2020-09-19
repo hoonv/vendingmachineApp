@@ -16,24 +16,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         let defaults = UserDefaults.standard
-        if let vm = defaults.object(forKey: "vending") as? Data {
-            let decoder = JSONDecoder()
-            if let vending = try? decoder.decode(VendingMachine.self, from: vm) {
-                vendingMachine = vending
-            }
-        }else {
+        guard let load = defaults.object(forKey: "vending") as? Data else { return }
+        do {
+            let loadedMachine = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(load) as? VendingMachine
+            vendingMachine = loadedMachine
+        } catch {
             vendingMachine = VendingMachine()
         }
-
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(vendingMachine) {
-            let defaults = UserDefaults.standard
-            defaults.set(encoded, forKey: "vending")
-        }
+        let defaults = UserDefaults.standard
+        defaults.set(NSKeyedArchiver.archivedData(withRootObject: vendingMachine), forKey: "vending")
     }
 }
 

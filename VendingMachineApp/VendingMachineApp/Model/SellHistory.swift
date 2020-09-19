@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SellHistory: Codable {
+class SellHistory: NSObject, NSCoding {
     
     private(set) var items: [Beverage] {
         didSet {
@@ -16,8 +16,21 @@ class SellHistory: Codable {
         }
     }
     
-    init() {
+    private enum Keys: String {
+        case items
+    }
+    
+    override init() {
         items = []
+    }
+    
+    required init?(coder: NSCoder) {
+        items = coder.decodeObject(forKey: Keys.items.rawValue) as? [Beverage] ?? []
+
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(items, forKey: Keys.items.rawValue)
     }
     
     func append(beverage: Beverage) {

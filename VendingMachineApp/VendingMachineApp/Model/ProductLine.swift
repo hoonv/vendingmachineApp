@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ProductLine: Codable {
+class ProductLine: NSObject, NSCoding {
     
     private(set) var sample: Beverage
     private var items: [Beverage] {
@@ -20,9 +20,25 @@ class ProductLine: Codable {
     var count: Int { return items.count }
     var isEmpty: Bool { return items.isEmpty }
     
+    private enum Keys: String {
+        case sample
+        case items
+    }
+    
     init(sample: Beverage, items: [Beverage] = []) {
         self.sample = sample
         self.items = items
+    }
+
+    required init?(coder: NSCoder) {
+        sample = coder.decodeObject(forKey: Keys.sample.rawValue) as?
+            Beverage ?? BeverageFactory.makeBeverage(kind: .cantata)
+        items = coder.decodeObject(forKey: Keys.items.rawValue) as? [Beverage] ?? []
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(sample, forKey: Keys.sample.rawValue)
+        coder.encode(items, forKey: Keys.items.rawValue)
     }
     
     func isAvailableToAppend(item: Beverage) -> Bool {

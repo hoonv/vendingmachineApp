@@ -68,4 +68,48 @@ class VendingMachineAppTests: XCTestCase {
         }
         XCTAssertEqual(count, 4)
     }
+    
+    func test_음료아카이브() throws {
+        let cantata = BeverageFactory.makeBeverage(kind: .cantata)
+        let copy = try NSKeyedArchiver.archivedData(withRootObject: cantata, requiringSecureCoding: false)
+        let load = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(copy) as? Cantata
+        XCTAssertEqual(cantata, load)
+    }
+    
+    func test_자판기_아카이브() throws {
+        let vm = VendingMachine()
+        vm.receiveBalance(bill: 1000)
+        vm.receiveBalance(coin: 500)
+        let copy = try NSKeyedArchiver.archivedData(withRootObject: vm, requiringSecureCoding: false)
+        let load = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(copy) as? VendingMachine
+        if let copyVm = load {
+            XCTAssertEqual(vm.currentBalance(), copyVm.currentBalance())
+
+        }
+    }
+    
+    func test_자판기_아카이브_물건갯수_6개_테스트() throws {
+        let vm = VendingMachine()
+        let copy = try NSKeyedArchiver.archivedData(withRootObject: vm, requiringSecureCoding: false)
+        let load = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(copy) as? VendingMachine
+        if let copyVm = load {
+            let count = vm.productState().reduce(0) { $0 + $1.1 }
+            let copyCount = copyVm.productState().reduce(0) { $0 + $1.1 }
+            XCTAssertEqual(count, copyCount)
+
+        }
+    }
+    
+    func test_자판기_아카이브_물건갯수_7개_테스트() throws {
+        let vm = VendingMachine()
+        vm.addProduct(beverage: BeverageFactory.makeBeverage(kind: .cantata))
+        let copy = try NSKeyedArchiver.archivedData(withRootObject: vm, requiringSecureCoding: false)
+        let load = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(copy) as? VendingMachine
+        if let copyVm = load {
+            let count = vm.productState().reduce(0) { $0 + $1.1 }
+            let copyCount = copyVm.productState().reduce(0) { $0 + $1.1 }
+            XCTAssertEqual(count, copyCount)
+
+        }
+    }
 }

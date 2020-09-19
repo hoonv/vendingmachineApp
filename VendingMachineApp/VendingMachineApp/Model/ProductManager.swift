@@ -8,12 +8,25 @@
 
 import Foundation
 
-class ProductManager: Codable {
+class ProductManager: NSObject, NSCoding {
     
     private var lines: [ProductLine]
     
-    init() {
+    private enum Keys: String {
+        case lines
+    }
+    
+    override init() {
         lines = []
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        lines = coder.decodeObject(forKey: Keys.lines.rawValue) as? [ProductLine] ?? []
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(lines, forKey: Keys.lines.rawValue)
     }
     
     func addProduct(beverage: Beverage) {

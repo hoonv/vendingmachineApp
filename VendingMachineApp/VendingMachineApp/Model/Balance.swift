@@ -8,18 +8,31 @@
 
 import Foundation
 
-class Balance: Codable {
+class Balance: NSObject, NSCoding {
     
     private(set) var amount: Int {
         didSet {
             NotificationCenter.default.post(name: .didChangedCoin, object: amount)
         }
     }
+    
+    private enum Keys: String {
+        case amount
+    }
 
-    init() {
+    override init() {
         amount = 0
+        super.init()
     }
     
+    required init?(coder: NSCoder) {
+        amount = coder.decodeInteger(forKey: Keys.amount.rawValue)
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(amount, forKey: Keys.amount.rawValue)
+    }
+
     func deposit(amount: Int) {
         guard self.amount >= 0 else { return }
         self.amount += amount
@@ -37,5 +50,6 @@ class Balance: Codable {
 }
 
 extension Notification.Name {
+    
     static let didChangedCoin = Notification.Name.init("didChanged")
 }

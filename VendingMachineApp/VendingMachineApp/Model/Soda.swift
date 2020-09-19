@@ -14,7 +14,7 @@ class Soda: Beverage, CalorieCheckable {
     var isHighCalorie: Bool { calorieContent > 10 }
     var isLowCalorie: Bool { calorieContent < 10 }
 
-    private enum CodingKeys: String, CodingKey {
+    private enum Keys: String {
         case calorieContent
     }
     
@@ -22,11 +22,15 @@ class Soda: Beverage, CalorieCheckable {
         calorieContent = calorie
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date)
     }
+
+    required init?(coder: NSCoder) {
+        calorieContent = coder.decodeInteger(forKey: Keys.calorieContent.rawValue)
+        super.init(coder: coder)
+    }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        calorieContent = try container.decode(Int.self, forKey: .calorieContent)
-        try super.init(from: decoder)
+    override func encode(with coder: NSCoder) {
+        coder.encode(calorieContent, forKey: Keys.calorieContent.rawValue)
+        super.encode(with: coder)
     }
 }
 
@@ -36,19 +40,23 @@ final class Coke: Soda, SugarCheckable {
     var isHighSugar: Bool { sugarContent > 10 }
     var isLowSugar: Bool { sugarContent < 10 }
 
-    private enum CodingKeys: String, CodingKey {
-        case sugarContent
+    private enum Keys: String {
+          case sugarContent
     }
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, calorie: Int, sugar: Int) {
         sugarContent = sugar
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, calorie: calorie)
     }
+
+    required init?(coder: NSCoder) {
+        sugarContent = coder.decodeInteger(forKey: Keys.sugarContent.rawValue)
+        super.init(coder: coder)
+    }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        sugarContent = try container.decode(Int.self, forKey: .sugarContent)
-        try super.init(from: decoder)
+    override func encode(with coder: NSCoder) {
+        coder.encode(sugarContent, forKey: Keys.sugarContent.rawValue)
+        super.encode(with: coder)
     }
 }
 
@@ -59,18 +67,22 @@ final class Cider: Soda, SugarCheckable {
     var isHighSugar: Bool { sugarContent > 10 }
     var isLowSugar: Bool { sugarContent < 10 }
 
-    private enum CodingKeys: String, CodingKey {
-        case sugarContent
+    private enum Keys: String {
+          case sugarContent
     }
     
     init(brand: String, capacity: Int, price: Int, name: String, date: Date, calorie: Int, sugar: Int) {
         sugarContent = sugar
         super.init(brand: brand, capacity: capacity, price: price, name: name, date: date, calorie: calorie)
     }
+
+    required init?(coder: NSCoder) {
+        sugarContent = coder.decodeInteger(forKey: Keys.sugarContent.rawValue)
+        super.init(coder: coder)
+    }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        sugarContent = try container.decode(Int.self, forKey: .sugarContent)
-        try super.init(from: decoder)
+    override func encode(with coder: NSCoder) {
+        coder.encode(sugarContent, forKey: Keys.sugarContent.rawValue)
+        super.encode(with: coder)
     }
 }
