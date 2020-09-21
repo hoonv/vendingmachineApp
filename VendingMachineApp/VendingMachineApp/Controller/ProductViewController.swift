@@ -72,8 +72,20 @@ extension ProductViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameWidth = self.view.frame.width
-        return CGSize(width: frameWidth / 3 * 0.9, height: frameWidth / 3 * 0.9)
+        let cellSize: CGFloat = frameWidth / calculateWidth(width: frameWidth) * 0.9
+        return CGSize(width: cellSize, height: cellSize)
 
+    }
+    
+    private func calculateWidth(width: CGFloat) -> CGFloat {
+        switch width {
+        case let w where w < 300:
+            return 1
+        case let w where w < 600:
+            return 2
+        default:
+            return 3
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -108,7 +120,7 @@ extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension ProductViewController: ButtonDelegate {
-    func touched(_ sender: UIButton) {
+    func didButtontouched(_ sender: UIButton) {
         let _ = machine.receiveOrder(index: sender.tag)
     }
 }

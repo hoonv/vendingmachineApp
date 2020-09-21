@@ -58,7 +58,7 @@
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cr9-Yv-CWJ">
                                 <rect key="frame" x="61" y="66" width="812" height="702"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <segue destination="BfK-7Z-0Rk" kind="embed" id="AJc-O2-8zV"/>
                                 </connections>
@@ -384,6 +384,7 @@
                             <constraint firstItem="Ebx-BW-jBU" firstAttribute="top" secondItem="JhU-Yu-n67" secondAttribute="topMargin" id="gdd-Ha-0sc"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Ebx-BW-jBU" secondAttribute="bottom" id="oa4-rA-vKB"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="TnO-dZ-8gw"/>
                     </view>
                     <connections>
                         <outlet property="ProductCollectionView" destination="Ebx-BW-jBU" id="tL1-8U-ah1"/>

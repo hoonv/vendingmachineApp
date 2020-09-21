@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ButtonDelegate {
-    func touched(_ sender: UIButton)
+    func didButtontouched(_ sender: UIButton)
 }
 
 class ProductViewCell: UICollectionViewCell {
@@ -24,11 +24,18 @@ class ProductViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageWrapView.backgroundColor = .systemGray5
-        imageWrapView.layer.cornerRadius = imageWrapView.frame.width / 6
+        imageWrapView.layer.cornerRadius = imageWrapView.frame.width / 10
+        let tabGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTouched))
+        imageView.addGestureRecognizer(tabGesture)
+        imageView.isUserInteractionEnabled = true
     }
     
+    @objc private func imageViewTouched() {
+        Speaker.speak(text: priceLabel.text ?? "" )
+    }
+
     @IBAction func pushTouchedUp(_ sender: UIButton) {
-        delegate?.touched(sender)
+        delegate?.didButtontouched(sender)
     }
     
 }
