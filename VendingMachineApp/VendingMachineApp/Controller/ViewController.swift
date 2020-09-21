@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import NaturalLanguage
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -18,18 +20,14 @@ class ViewController: UIViewController {
     private var historyXCoordinate = 20
     private var historyImageViwes: [UIImageView] = []
     
-    @IBOutlet var imageViews: [UIImageView]!
     @IBOutlet weak var fiveTousand: UIButton!
     @IBOutlet weak var oneTousand: UIButton!
     @IBOutlet weak var currentCoin: UILabel!
-    @IBOutlet var pushButtons: [UIButton]!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedBalance),
                                                name: .didChangedCoin, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangedBeverage),
-                                               name: .didChangeBeverage, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(historyDidChanged),
                                                name: .historyDidChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(multipleOfTen),
@@ -39,9 +37,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLabels()
-        setupImages()
-        setupButtons()
-        setupPushButtonOnOff()
     }
     
     @objc private func multipleOfTen(sender: Notification) {
@@ -66,12 +61,7 @@ class ViewController: UIViewController {
     @objc private func didChangedBalance(sender: Notification) {
         if let coin = sender.object as? Int {
             currentCoin.text = "\(coin)원"
-            setupPushButtonOnOff()
         }
-    }
-    
-    @objc private func didChangedBeverage(sender: Notification) {
-        setupPushButtonOnOff()
     }
     
     @IBAction func oneTouched(_ sender: Any) {
@@ -82,34 +72,10 @@ class ViewController: UIViewController {
         machine.receiveBalance(coin: 5000)
     }    
     
-    @IBAction func onTouchPushButtons(_ sender: UIButton) {
-        let _ = machine.receiveOrder(index: sender.tag)
-    }
-    
-    private func setupButtons() {
-        pushButtons.enumerated().forEach { (idx, value) in
-            value.tag = idx
-        }
-    }
-    
-    private func setupPushButtonOnOff() {
-        let isAvailable = machine.isAvailableProductsToSell()
-        zip(pushButtons, isAvailable).forEach{ (button, check) in
-            let image = check ? UIImage(named: "on.png") : UIImage(named: "off.png")
-            button.setBackgroundImage(image, for: .normal)
-        }
-    }
-    
     private func setupLabels() {
         currentCoin.text = "\(machine.currentBalance())원"
     }
     
-    private func setupImages() {
-        let items = machine.productState()
-        items.enumerated().forEach { (idx, value) in
-            imageViews[idx].image = value.0.convertToUIImage()
-        }
-    }
     
     private func historyClear(action: UIAlertAction) {
         machine.removeHistory()

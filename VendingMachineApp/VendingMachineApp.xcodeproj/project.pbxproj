@@ -12,6 +12,9 @@
 		E06CD412251347BE002D6E78 /* SellHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD411251347BE002D6E78 /* SellHistory.swift */; };
 		E06CD41425136336002D6E78 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD41325136336002D6E78 /* ModalViewController.swift */; };
 		E06CD41625144C5D002D6E78 /* Beverage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06CD41525144C5D002D6E78 /* Beverage+extension.swift */; };
+		E0990FEF2518A778008FE4EE /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0990FEE2518A778008FE4EE /* ProductViewController.swift */; };
+		E0990FF62518A933008FE4EE /* ProductViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0990FF42518A933008FE4EE /* ProductViewCell.swift */; };
+		E0990FF72518A933008FE4EE /* ProductViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0990FF52518A933008FE4EE /* ProductViewCell.xib */; };
 		E0FCE910250F18A100851F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE90F250F18A100851F59 /* AppDelegate.swift */; };
 		E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE911250F18A100851F59 /* SceneDelegate.swift */; };
 		E0FCE914250F18A100851F59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE913250F18A100851F59 /* ViewController.swift */; };
@@ -45,6 +48,9 @@
 		E06CD411251347BE002D6E78 /* SellHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellHistory.swift; sourceTree = "<group>"; };
 		E06CD41325136336002D6E78 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		E06CD41525144C5D002D6E78 /* Beverage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Beverage+extension.swift"; sourceTree = "<group>"; };
+		E0990FEE2518A778008FE4EE /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		E0990FF42518A933008FE4EE /* ProductViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewCell.swift; sourceTree = "<group>"; };
+		E0990FF52518A933008FE4EE /* ProductViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductViewCell.xib; sourceTree = "<group>"; };
 		E0FCE90C250F18A100851F59 /* VendingMachineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VendingMachineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FCE90F250F18A100851F59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0FCE911250F18A100851F59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 			children = (
 				E0FCE913250F18A100851F59 /* ViewController.swift */,
 				E06CD41325136336002D6E78 /* ModalViewController.swift */,
+				E0990FEE2518A778008FE4EE /* ProductViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -158,6 +165,8 @@
 		E0FCE933250F353900851F59 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E0990FF42518A933008FE4EE /* ProductViewCell.swift */,
+				E0990FF52518A933008FE4EE /* ProductViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -243,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0990FF72518A933008FE4EE /* ProductViewCell.xib in Resources */,
 				E0FCE91C250F18A400851F59 /* LaunchScreen.storyboard in Resources */,
 				E0FCE919250F18A400851F59 /* Assets.xcassets in Resources */,
 				E0FCE917250F18A100851F59 /* Main.storyboard in Resources */,
@@ -270,6 +280,7 @@
 				E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */,
 				E06CD412251347BE002D6E78 /* SellHistory.swift in Sources */,
 				E0FCE935250F476700851F59 /* Beverage.swift in Sources */,
+				E0990FF62518A933008FE4EE /* ProductViewCell.swift in Sources */,
 				E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */,
 				E0FCE937250F51AC00851F59 /* Milk.swift in Sources */,
 				E0FCE9412510614A00851F59 /* BeverageFactory.swift in Sources */,
@@ -277,6 +288,7 @@
 				E0FCE93D250F5A2000851F59 /* VendingMachine.swift in Sources */,
 				E06CD41625144C5D002D6E78 /* Beverage+extension.swift in Sources */,
 				E06CD40E25120CFD002D6E78 /* Balance.swift in Sources */,
+				E0990FEF2518A778008FE4EE /* ProductViewController.swift in Sources */,
 				E06CD41025121792002D6E78 /* ProductManager.swift in Sources */,
 				E0FCE94325106D8600851F59 /* ProductLine.swift in Sources */,
 			);

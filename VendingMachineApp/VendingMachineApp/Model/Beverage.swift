@@ -10,7 +10,6 @@ import Foundation
 
 class Beverage: NSObject, NSCoding {
     
-        
     private let brand: String
     private let capacity: Int
     private(set) var price: Int
