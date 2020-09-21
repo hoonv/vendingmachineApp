@@ -52,9 +52,13 @@
                                     <segue destination="IbN-Tw-aO0" kind="presentation" id="bvP-OS-Q0H"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4RO-RB-1Xe">
-                                <rect key="frame" x="1094" y="732" width="25" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4RO-RB-1Xe">
+                                <rect key="frame" x="1064" y="703" width="71" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <state key="normal" backgroundImage="message"/>
+                                <connections>
+                                    <action selector="msgButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VzN-Oq-0w1"/>
+                                </connections>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cr9-Yv-CWJ">
                                 <rect key="frame" x="61" y="66" width="812" height="702"/>
@@ -63,6 +67,11 @@
                                     <segue destination="BfK-7Z-0Rk" kind="embed" id="AJc-O2-8zV"/>
                                 </connections>
                             </containerView>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n07-Ih-Gmo" customClass="MessageView" customModule="VendingMachineApp" customModuleProvider="target">
+                                <rect key="frame" x="857" y="107" width="278" height="588"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -80,6 +89,8 @@
                     <connections>
                         <outlet property="currentCoin" destination="5qA-C8-p7Z" id="CKx-35-2dt"/>
                         <outlet property="fiveTousand" destination="UmM-Bz-7hF" id="glz-kx-FBa"/>
+                        <outlet property="messageButton" destination="4RO-RB-1Xe" id="m7n-CM-QOV"/>
+                        <outlet property="messageView" destination="n07-Ih-Gmo" id="BFT-we-yKy"/>
                         <outlet property="oneTousand" destination="wFu-Kd-ay7" id="ut1-au-Xlm"/>
                     </connections>
                 </viewController>
@@ -395,4 +406,7 @@
             <point key="canvasLocation" x="41.708542713567837" y="822.30215827338134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="message" width="132" height="117"/>
+    </resources>
 </document>

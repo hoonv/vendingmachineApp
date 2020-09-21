@@ -20,9 +20,11 @@ class ViewController: UIViewController {
     private var historyXCoordinate = 20
     private var historyImageViwes: [UIImageView] = []
     
+    @IBOutlet weak var messageView: MessageView!
     @IBOutlet weak var fiveTousand: UIButton!
     @IBOutlet weak var oneTousand: UIButton!
     @IBOutlet weak var currentCoin: UILabel!
+    @IBOutlet weak var messageButton: UIButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -71,6 +73,10 @@ class ViewController: UIViewController {
     @IBAction func fiveTouched(_ sender: Any) {
         machine.receiveBalance(coin: 5000)
     }    
+    
+    @IBAction func msgButtonTouched(_ sender: UIButton) {
+        messageView.isHidden = !messageView.isHidden
+    }
     
     private func setupLabels() {
         currentCoin.text = "\(machine.currentBalance())원"
