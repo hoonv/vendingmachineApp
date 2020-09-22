@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 func makeBeverageDictForJson(token: String) -> [[String: [String]]] {
         
     var ret: [[String: [String]]] = []
