@@ -23,11 +23,16 @@ class ProductViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageWrapView.backgroundColor = .systemGray5
-        imageWrapView.layer.cornerRadius = imageWrapView.frame.width / 10
+        setupImageWrap()
         let tabGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTouched))
         imageView.addGestureRecognizer(tabGesture)
         imageView.isUserInteractionEnabled = true
+    }
+    
+    private func setupImageWrap() {
+        imageWrapView.backgroundColor = .systemGray5
+        imageWrapView.layer.cornerRadius = imageWrapView.frame.width / 10
+        
     }
     
     @objc private func imageViewTouched() {
