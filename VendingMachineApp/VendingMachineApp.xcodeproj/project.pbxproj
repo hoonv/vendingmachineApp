@@ -22,6 +22,9 @@
 		E09910062519CC1F008FE4EE /* BlueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09910042519CC1F008FE4EE /* BlueTableViewCell.swift */; };
 		E09910072519CC1F008FE4EE /* BlueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E09910052519CC1F008FE4EE /* BlueTableViewCell.xib */; };
 		E09910092519D4D4008FE4EE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09910082519D4D4008FE4EE /* Message.swift */; };
+		E0991024251A2709008FE4EE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0991023251A2709008FE4EE /* main.swift */; };
+		E0991029251A29BE008FE4EE /* BeverageJsonMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0991028251A29BE008FE4EE /* BeverageJsonMaker.swift */; };
+		E0991030251A36C0008FE4EE /* OrderTagger.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E099102F251A36C0008FE4EE /* OrderTagger.mlmodel */; };
 		E0FCE910250F18A100851F59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE90F250F18A100851F59 /* AppDelegate.swift */; };
 		E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE911250F18A100851F59 /* SceneDelegate.swift */; };
 		E0FCE914250F18A100851F59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE913250F18A100851F59 /* ViewController.swift */; };
@@ -49,6 +52,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E099101F251A2709008FE4EE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E06CD40D25120CFD002D6E78 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		E06CD40F25121792002D6E78 /* ProductManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManager.swift; sourceTree = "<group>"; };
@@ -65,6 +80,10 @@
 		E09910042519CC1F008FE4EE /* BlueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueTableViewCell.swift; sourceTree = "<group>"; };
 		E09910052519CC1F008FE4EE /* BlueTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlueTableViewCell.xib; sourceTree = "<group>"; };
 		E09910082519D4D4008FE4EE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		E0991021251A2709008FE4EE /* JsonMaker */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JsonMaker; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0991023251A2709008FE4EE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		E0991028251A29BE008FE4EE /* BeverageJsonMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeverageJsonMaker.swift; sourceTree = "<group>"; };
+		E099102F251A36C0008FE4EE /* OrderTagger.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = OrderTagger.mlmodel; path = ../../../../../../Documents/ML/MyWordTagger.mlproj/Models/OrderTagger.mlmodel; sourceTree = "<group>"; };
 		E0FCE90C250F18A100851F59 /* VendingMachineApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VendingMachineApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FCE90F250F18A100851F59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0FCE911250F18A100851F59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +106,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E099101E251A2709008FE4EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E0FCE909250F18A100851F59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -104,11 +130,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E0991022251A2709008FE4EE /* JsonMaker */ = {
+			isa = PBXGroup;
+			children = (
+				E0991023251A2709008FE4EE /* main.swift */,
+				E0991028251A29BE008FE4EE /* BeverageJsonMaker.swift */,
+			);
+			path = JsonMaker;
+			sourceTree = "<group>";
+		};
+		E099102E251A36B3008FE4EE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				E099102F251A36C0008FE4EE /* OrderTagger.mlmodel */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		E0FCE903250F18A100851F59 = {
 			isa = PBXGroup;
 			children = (
 				E0FCE90E250F18A100851F59 /* VendingMachineApp */,
 				E0FCE925250F18A400851F59 /* VendingMachineAppTests */,
+				E0991022251A2709008FE4EE /* JsonMaker */,
 				E0FCE90D250F18A100851F59 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +162,7 @@
 			children = (
 				E0FCE90C250F18A100851F59 /* VendingMachineApp.app */,
 				E0FCE922250F18A400851F59 /* VendingMachineAppTests.xctest */,
+				E0991021251A2709008FE4EE /* JsonMaker */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +170,7 @@
 		E0FCE90E250F18A100851F59 /* VendingMachineApp */ = {
 			isa = PBXGroup;
 			children = (
+				E099102E251A36B3008FE4EE /* Resource */,
 				E0FCE933250F353900851F59 /* View */,
 				E0FCE932250F352B00851F59 /* Model */,
 				E0FCE931250F352500851F59 /* Controller */,
@@ -195,6 +241,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E0991020251A2709008FE4EE /* JsonMaker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0991025251A2709008FE4EE /* Build configuration list for PBXNativeTarget "JsonMaker" */;
+			buildPhases = (
+				E099101D251A2709008FE4EE /* Sources */,
+				E099101E251A2709008FE4EE /* Frameworks */,
+				E099101F251A2709008FE4EE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JsonMaker;
+			productName = JsonMaker;
+			productReference = E0991021251A2709008FE4EE /* JsonMaker */;
+			productType = "com.apple.product-type.tool";
+		};
 		E0FCE90B250F18A100851F59 /* VendingMachineApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E0FCE92B250F18A400851F59 /* Build configuration list for PBXNativeTarget "VendingMachineApp" */;
@@ -240,6 +303,9 @@
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "채훈기";
 				TargetAttributes = {
+					E0991020251A2709008FE4EE = {
+						CreatedOnToolsVersion = 11.6;
+					};
 					E0FCE90B250F18A100851F59 = {
 						CreatedOnToolsVersion = 11.6;
 					};
@@ -264,6 +330,7 @@
 			targets = (
 				E0FCE90B250F18A100851F59 /* VendingMachineApp */,
 				E0FCE921250F18A400851F59 /* VendingMachineAppTests */,
+				E0991020251A2709008FE4EE /* JsonMaker */,
 			);
 		};
 /* End PBXProject section */
@@ -292,6 +359,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E099101D251A2709008FE4EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0991024251A2709008FE4EE /* main.swift in Sources */,
+				E0991029251A29BE008FE4EE /* BeverageJsonMaker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E0FCE908250F18A100851F59 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,6 +381,7 @@
 				E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */,
 				E06CD412251347BE002D6E78 /* SellHistory.swift in Sources */,
 				E0FCE935250F476700851F59 /* Beverage.swift in Sources */,
+				E0991030251A36C0008FE4EE /* OrderTagger.mlmodel in Sources */,
 				E0990FF62518A933008FE4EE /* ProductViewCell.swift in Sources */,
 				E0FCE912250F18A100851F59 /* SceneDelegate.swift in Sources */,
 				E0FCE937250F51AC00851F59 /* Milk.swift in Sources */,
@@ -360,6 +437,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E0991026251A2709008FE4EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E0991027251A2709008FE4EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		E0FCE929250F18A400851F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -553,6 +652,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E0991025251A2709008FE4EE /* Build configuration list for PBXNativeTarget "JsonMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0991026251A2709008FE4EE /* Debug */,
+				E0991027251A2709008FE4EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E0FCE907250F18A100851F59 /* Build configuration list for PBXProject "VendingMachineApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

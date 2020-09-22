@@ -91,7 +91,7 @@ extension MessageView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         messages.append(Message(sender: .user, text: textField.text ?? ""))
-        messages.append(Message(sender: .system, text: "Hello!"))
+        messages.append(Message(sender: .system, text: textField.text ?? ""))
         textField.text = ""
         textField.endEditing(true)
         myTableView.reloadData()
