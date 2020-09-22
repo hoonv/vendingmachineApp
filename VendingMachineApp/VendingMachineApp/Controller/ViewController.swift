@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import NaturalLanguage
-import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -36,9 +34,11 @@ class ViewController: UIViewController {
                                                name: .mutipleOfTen, object: nil)
 
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLabels()
+        setupBalance()
+        setupMsgBtnShadow()
     }
     
     @objc private func multipleOfTen(sender: Notification) {
@@ -78,10 +78,16 @@ class ViewController: UIViewController {
         messageView.isHidden = !messageView.isHidden
     }
     
-    private func setupLabels() {
+    private func setupBalance() {
         currentCoin.text = "\(machine.currentBalance())원"
     }
     
+    private func setupMsgBtnShadow() {
+        messageButton.layer.shadowRadius = 4
+        messageButton.layer.shadowOpacity = 0.8
+        messageButton.layer.shadowColor = UIColor.blue.cgColor
+        messageButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
     
     private func historyClear(action: UIAlertAction) {
         machine.removeHistory()
