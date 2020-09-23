@@ -30,7 +30,6 @@ class MessageView: UIView {
         setupHeader()
         setupTextField()
         setupTabelView()
-        
     }
     
     override func layoutSubviews() {
@@ -50,12 +49,13 @@ class MessageView: UIView {
         myTableView = UITableView(frame: CGRect(x: 0, y: 50, width: frame.width, height: 480))
         myTableView.delegate = self
         myTableView.dataSource = self
-        
+        myTableView.rowHeight = UITableView.automaticDimension
+        myTableView.estimatedRowHeight = 44.0
+
         let revNibName = UINib(nibName: "YellowTableViewCell", bundle: nil)
         let sendNibName = UINib(nibName: "BlueTableViewCell", bundle: nil)
         myTableView.register(revNibName, forCellReuseIdentifier: "YellowTableViewCell")
         myTableView.register(sendNibName, forCellReuseIdentifier: "BlueTableViewCell")
-
         addSubview(myTableView)
     }
         
@@ -85,6 +85,14 @@ class MessageView: UIView {
 
         addSubview(header)
     }
+    func scrollLastOfTableView() {
+      // First figure out how many sections there are
+      let lastSectionIndex = self.myTableView.numberOfSections - 1
+      // Then grab the number of rows in the last section
+      let lastRowInLastSection = self.myTableView.numberOfRows(inSection: lastSectionIndex) - 1
+      let indexPath = IndexPath(row: lastRowInLastSection, section: lastSectionIndex)
+      self.myTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
 }
 
 extension MessageView: UITextFieldDelegate {
@@ -95,6 +103,7 @@ extension MessageView: UITextFieldDelegate {
         textField.text = ""
         textField.endEditing(true)
         myTableView.reloadData()
+        scrollLastOfTableView()
         return true
     }
 }

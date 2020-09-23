@@ -11,32 +11,47 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BlueTableViewCell" id="KGk-i7-Jjw" customClass="BlueTableViewCell" customModule="VendingMachineApp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="receiveTalk" translatesAutoresizingMaskIntoConstraints="NO" id="vY1-xf-Lw2">
-                        <rect key="frame" x="7" y="4" width="177" height="36"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJQ-9T-Ona">
-                        <rect key="frame" x="23" y="12" width="156" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWs-PK-Jdg">
+                        <rect key="frame" x="18" y="6" width="62" height="32"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJQ-9T-Ona">
+                                <rect key="frame" x="10" y="6" width="42" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="uv0-My-Alf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.36470588235294116" green="0.7803921568627451" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="3fT-Hb-Lzj"/>
+                            <constraint firstItem="WJQ-9T-Ona" firstAttribute="leading" secondItem="eWs-PK-Jdg" secondAttribute="leading" constant="10" id="96N-bA-bSD"/>
+                            <constraint firstAttribute="trailing" secondItem="WJQ-9T-Ona" secondAttribute="trailing" constant="10" id="Yk3-tY-84P"/>
+                            <constraint firstItem="WJQ-9T-Ona" firstAttribute="top" secondItem="eWs-PK-Jdg" secondAttribute="top" constant="6" id="fur-lg-vpj"/>
+                            <constraint firstAttribute="bottom" secondItem="WJQ-9T-Ona" secondAttribute="bottom" constant="6" id="weV-XX-xCO"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eWs-PK-Jdg" secondAttribute="trailing" constant="80" id="C2h-by-jPe"/>
+                    <constraint firstItem="eWs-PK-Jdg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="CmU-6X-T7d"/>
+                    <constraint firstItem="eWs-PK-Jdg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="JAA-AN-O05"/>
+                    <constraint firstAttribute="bottom" secondItem="eWs-PK-Jdg" secondAttribute="bottom" constant="6" id="Lpp-2Z-HcB"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="labelWrapper" destination="eWs-PK-Jdg" id="uTd-1J-osY"/>
                 <outlet property="message" destination="WJQ-9T-Ona" id="2tu-GX-qQn"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="receiveTalk" width="653" height="112"/>
-    </resources>
 </document>
