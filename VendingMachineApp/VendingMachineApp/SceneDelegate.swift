@@ -14,6 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var vendingMachine: VendingMachine!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        vendingMachine = VendingMachine()
 
         let defaults = UserDefaults.standard
         guard let load = defaults.object(forKey: "vending") as? Data else { return }
