@@ -15,7 +15,7 @@ class CameraViewController: UIViewController {
     private var requests = [VNRequest]()
     private var detectionOverlay = CALayer()
     private let textLayer = CATextLayer()
-    private var takePictureBool = false
+    private var shouldTakePicture = false
     private let capturedImageView = CapturedImageView()
     private var windowOrientation: UIInterfaceOrientation {
         return view.window?.windowScene?.interfaceOrientation ?? .unknown
@@ -66,7 +66,7 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func didPressTakePhoto(_ sender: UIButton) {
-        takePictureBool = true
+        shouldTakePicture = true
     }
     
     @IBAction func cancelTouched(_ sender: UIButton) {
@@ -273,7 +273,7 @@ class CameraViewController: UIViewController {
 
 extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if !takePictureBool {
+        if !shouldTakePicture {
             guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
                 return
             }
@@ -301,7 +301,7 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let uiImage = UIImage(ciImage: ciImage)
         DispatchQueue.main.async {
             self.capturedImageView.image = uiImage
-            self.takePictureBool = false
+            self.shouldTakePicture = false
         }
     }
     
