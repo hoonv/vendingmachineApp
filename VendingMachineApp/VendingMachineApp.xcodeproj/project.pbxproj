@@ -40,6 +40,8 @@
 		E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */; };
 		E0FCE9412510614A00851F59 /* BeverageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE9402510614A00851F59 /* BeverageFactory.swift */; };
 		E0FCE94325106D8600851F59 /* ProductLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE94225106D8600851F59 /* ProductLine.swift */; };
+		E0FD5FE9251B86FF003335C8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD5FE8251B86FF003335C8 /* CameraViewController.swift */; };
+		E0FD5FFF251C7565003335C8 /* CapturedImageview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD5FFE251C7565003335C8 /* CapturedImageview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		E0FCE93E250F9F5900851F59 /* BeverageProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeverageProtocols.swift; sourceTree = "<group>"; };
 		E0FCE9402510614A00851F59 /* BeverageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeverageFactory.swift; sourceTree = "<group>"; };
 		E0FCE94225106D8600851F59 /* ProductLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLine.swift; sourceTree = "<group>"; };
+		E0FD5FE8251B86FF003335C8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		E0FD5FFE251C7565003335C8 /* CapturedImageview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturedImageview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +203,7 @@
 				E0FCE913250F18A100851F59 /* ViewController.swift */,
 				E06CD41325136336002D6E78 /* ModalViewController.swift */,
 				E0990FEE2518A778008FE4EE /* ProductViewController.swift */,
+				E0FD5FE8251B86FF003335C8 /* CameraViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				E09910012519C868008FE4EE /* YellowTableViewCell.xib */,
 				E09910042519CC1F008FE4EE /* BlueTableViewCell.swift */,
 				E09910052519CC1F008FE4EE /* BlueTableViewCell.xib */,
+				E0FD5FFE251C7565003335C8 /* CapturedImageview.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				E09910062519CC1F008FE4EE /* BlueTableViewCell.swift in Sources */,
 				E0FCE93F250F9F5900851F59 /* BeverageProtocols.swift in Sources */,
 				E06CD412251347BE002D6E78 /* SellHistory.swift in Sources */,
+				E0FD5FFF251C7565003335C8 /* CapturedImageview.swift in Sources */,
 				E0FCE935250F476700851F59 /* Beverage.swift in Sources */,
 				E0991030251A36C0008FE4EE /* OrderTagger.mlmodel in Sources */,
 				E0990FF62518A933008FE4EE /* ProductViewCell.swift in Sources */,
@@ -388,6 +395,7 @@
 				E0FCE9412510614A00851F59 /* BeverageFactory.swift in Sources */,
 				E0FCE93B250F51BB00851F59 /* Coffee.swift in Sources */,
 				E0FCE93D250F5A2000851F59 /* VendingMachine.swift in Sources */,
+				E0FD5FE9251B86FF003335C8 /* CameraViewController.swift in Sources */,
 				E06CD41625144C5D002D6E78 /* Beverage+extension.swift in Sources */,
 				E09910022519C868008FE4EE /* YellowTableViewCell.swift in Sources */,
 				E09910092519D4D4008FE4EE /* Message.swift in Sources */,
@@ -578,6 +586,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7BP3494UVW;
 				INFOPLIST_FILE = VendingMachineApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -595,6 +604,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7BP3494UVW;
 				INFOPLIST_FILE = VendingMachineApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
