@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ButtonDelegate {
+protocol ButtonDelegate: class {
     func didButtontouched(_ sender: UIButton)
 }
 
@@ -19,7 +19,7 @@ class ProductViewCell: UICollectionViewCell {
     @IBOutlet weak var pushButton: UIButton!
     @IBOutlet weak var priceLabel: UILabel!
     
-    var delegate: ButtonDelegate?
+    weak var delegate: ButtonDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
