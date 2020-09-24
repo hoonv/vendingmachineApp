@@ -8,12 +8,19 @@
 
 import UIKit
 import AVFoundation
+import Vision
 
 class CameraViewController: UIViewController {
 
-    @IBOutlet weak var takePicture: UIButton!
-    @IBOutlet weak var cancelButton: UIButton!
-    
+    private var requests = [VNRequest]()
+    private var detectionOverlay = CALayer()
+    private let textLayer = CATextLayer()
+    private var takePictureBool = false
+    private let capturedImageView = CapturedImageView()
+    private var windowOrientation: UIInterfaceOrientation {
+        return view.window?.windowScene?.interfaceOrientation ?? .unknown
+    }
+
     var videoOutput : AVCaptureVideoDataOutput!
     var captureSession : AVCaptureSession!
     var backCamera : AVCaptureDevice!
@@ -21,45 +28,13 @@ class CameraViewController: UIViewController {
     var backInput : AVCaptureInput!
     var frontInput : AVCaptureInput!
     var previewLayer : AVCaptureVideoPreviewLayer!
-    var takePictureBool = false
-    let capturedImageView = CapturedImageView()
-    var windowOrientation: UIInterfaceOrientation {
-        return view.window?.windowScene?.interfaceOrientation ?? .unknown
-    }
     
-    @IBAction func cancelTouched(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
+    @IBOutlet weak var takePicture: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
- 
-    private func setupUI() {
-        view.addSubview(capturedImageView)
-        
-        takePicture.translatesAutoresizingMaskIntoConstraints = false
-        capturedImageView.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            takePicture.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            takePicture.heightAnchor.constraint(equalToConstant: 50),
-            takePicture.widthAnchor.constraint(equalToConstant: 50),
-            takePicture.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            capturedImageView.heightAnchor.constraint(equalToConstant: 55),
-            capturedImageView.widthAnchor.constraint(equalToConstant: 55),
-            capturedImageView.topAnchor.constraint(equalTo: takePicture.bottomAnchor, constant: 30),
-            capturedImageView.trailingAnchor.constraint(equalTo: takePicture.trailingAnchor),
-            
-            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-
-        ])
-        takePicture.layer.cornerRadius = 25
-        capturedImageView.layer.cornerRadius = 10
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +44,7 @@ class CameraViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkPermissions()
+        setupVision()
         setupAndStartCaptureSession()
     }
 
@@ -93,7 +69,48 @@ class CameraViewController: UIViewController {
         takePictureBool = true
     }
     
-    func setupAndStartCaptureSession(){
+    @IBAction func cancelTouched(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func setupUI() {
+        view.addSubview(capturedImageView)
+        
+        takePicture.translatesAutoresizingMaskIntoConstraints = false
+        capturedImageView.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            takePicture.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            takePicture.heightAnchor.constraint(equalToConstant: 50),
+            takePicture.widthAnchor.constraint(equalToConstant: 50),
+            takePicture.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            capturedImageView.heightAnchor.constraint(equalToConstant: 55),
+            capturedImageView.widthAnchor.constraint(equalToConstant: 55),
+            capturedImageView.topAnchor.constraint(equalTo: takePicture.bottomAnchor, constant: 30),
+            capturedImageView.trailingAnchor.constraint(equalTo: takePicture.trailingAnchor),
+            
+            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+
+        ])
+        takePicture.layer.cornerRadius = 25
+        capturedImageView.layer.cornerRadius = 10
+        
+        detectionOverlay.borderWidth = 2
+        detectionOverlay.borderColor = UIColor.yellow.cgColor
+        detectionOverlay.backgroundColor = UIColor.clear.cgColor
+        detectionOverlay.cornerRadius = 10
+        
+        view.layer.insertSublayer(detectionOverlay, above: previewLayer)
+        textLayer.backgroundColor = UIColor.yellow.cgColor
+        textLayer.fontSize = 5
+        textLayer.cornerRadius = 5
+        detectionOverlay.addSublayer(textLayer)
+    }
+    
+    private func setupAndStartCaptureSession(){
         DispatchQueue.global(qos: .userInitiated).async{
             //init session
             self.captureSession = AVCaptureSession()
@@ -114,7 +131,7 @@ class CameraViewController: UIViewController {
                 self.setupPreviewLayer()
             }
             self.setupOutput()
-
+            
             //commit configuration
             self.captureSession.commitConfiguration()
             //start running it
@@ -122,7 +139,49 @@ class CameraViewController: UIViewController {
         }
     }
     
-    func setupOutput(){
+    private func setupVision() -> NSError? {
+        // Setup Vision parts
+        let error: NSError! = nil
+        
+        guard let modelURL = Bundle.main.url(forResource: "ObjectDetector", withExtension: "mlmodelc") else {
+            return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
+        }
+        do {
+            let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
+            let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
+                DispatchQueue.main.async(execute: {
+                    if let results = request.results {
+                        self.drawVisionRequestResults(results)
+                    }
+                })
+            })
+            self.requests = [objectRecognition]
+        } catch let error as NSError {
+            print("Model loading went wrong: \(error)")
+        }
+        return error
+    }
+    
+    private func drawVisionRequestResults(_ results: [Any]) {
+
+        for observation in results where observation is VNRecognizedObjectObservation {
+            guard let objectObservation = observation as? VNRecognizedObjectObservation else {
+                continue
+            }
+            let first = objectObservation.labels[0]
+            let objectBounds = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(view.bounds.width), Int(view.bounds.height))
+
+            DispatchQueue.main.async {
+                self.detectionOverlay.bounds = objectBounds
+                self.detectionOverlay.position = CGPoint(x: objectBounds.midX, y: objectBounds.midY)
+                let formattedString = NSMutableAttributedString(string: String(format: "\(first.identifier)\nConfidence:  %.2f", first.confidence))
+                self.textLayer.string = formattedString
+                self.textLayer.frame = CGRect(x: objectBounds.minX + 2, y: objectBounds.minY + 2, width: objectBounds.width, height: 30)
+            }
+        }
+    }
+
+    private func setupOutput(){
         videoOutput = AVCaptureVideoDataOutput()
         let videoQueue = DispatchQueue(label: "videoQueue", qos: .userInteractive)
         videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
@@ -135,7 +194,7 @@ class CameraViewController: UIViewController {
         videoOutput.connections.first?.videoOrientation = .landscapeRight
     }
     
-    func setupPreviewLayer(){
+    private func setupPreviewLayer(){
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         view.layer.addSublayer(previewLayer)
         view.layer.insertSublayer(previewLayer, below: takePicture.layer)
@@ -154,7 +213,7 @@ class CameraViewController: UIViewController {
         return initialVideoOrientation
     }
     
-    func setupInputs(){
+    private func setupInputs(){
         //get back camera
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             backCamera = device
@@ -190,7 +249,7 @@ class CameraViewController: UIViewController {
         captureSession.addInput(backInput)
     }
     
-    func checkPermissions() {
+    private func checkPermissions() {
         let cameraAuthStatus =  AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch cameraAuthStatus {
           case .authorized:
@@ -215,23 +274,53 @@ class CameraViewController: UIViewController {
 extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if !takePictureBool {
-            return //we have nothing to do with the image buffer
+            guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+                return
+            }
+            
+            let exifOrientation = exifOrientationFromDeviceOrientation()
+            
+            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: exifOrientation, options: [:])
+            do {
+                try imageRequestHandler.perform(self.requests)
+            } catch {
+                print(error)
+            }
+            return
         }
-        
+
         //try and get a CVImageBuffer out of the sample buffer
         guard let cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
-        
+
         //get a CIImage out of the CVImageBuffer
         let ciImage = CIImage(cvImageBuffer: cvBuffer)
-        
+
         //get UIImage out of CIImage
         let uiImage = UIImage(ciImage: ciImage)
-        
         DispatchQueue.main.async {
             self.capturedImageView.image = uiImage
             self.takePictureBool = false
         }
+    }
+    
+    public func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {
+        let curDeviceOrientation = UIDevice.current.orientation
+        let exifOrientation: CGImagePropertyOrientation
+        
+        switch curDeviceOrientation {
+        case UIDeviceOrientation.portraitUpsideDown:  // Device oriented vertically, home button on the top
+            exifOrientation = .left
+        case UIDeviceOrientation.landscapeLeft:       // Device oriented horizontally, home button on the right
+            exifOrientation = .upMirrored
+        case UIDeviceOrientation.landscapeRight:      // Device oriented horizontally, home button on the left
+            exifOrientation = .down
+        case UIDeviceOrientation.portrait:            // Device oriented vertically, home button on the bottom
+            exifOrientation = .up
+        default:
+            exifOrientation = .up
+        }
+        return exifOrientation
     }
 }

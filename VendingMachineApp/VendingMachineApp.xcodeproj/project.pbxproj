@@ -42,6 +42,7 @@
 		E0FCE94325106D8600851F59 /* ProductLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FCE94225106D8600851F59 /* ProductLine.swift */; };
 		E0FD5FE9251B86FF003335C8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD5FE8251B86FF003335C8 /* CameraViewController.swift */; };
 		E0FD5FFF251C7565003335C8 /* CapturedImageview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FD5FFE251C7565003335C8 /* CapturedImageview.swift */; };
+		E0FD6007251CB8D1003335C8 /* ObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E0FD6006251CB8D1003335C8 /* ObjectDetector.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		E0FCE94225106D8600851F59 /* ProductLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLine.swift; sourceTree = "<group>"; };
 		E0FD5FE8251B86FF003335C8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		E0FD5FFE251C7565003335C8 /* CapturedImageview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturedImageview.swift; sourceTree = "<group>"; };
+		E0FD6006251CB8D1003335C8 /* ObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = ObjectDetector.mlmodel; path = ../../../../../../Downloads/RecognizingObjectsInLiveCapture/BreakfastFinder/ObjectDetector.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		E099102E251A36B3008FE4EE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				E0FD6006251CB8D1003335C8 /* ObjectDetector.mlmodel */,
 				E099102F251A36C0008FE4EE /* OrderTagger.mlmodel */,
 			);
 			path = Resource;
@@ -378,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0FD6007251CB8D1003335C8 /* ObjectDetector.mlmodel in Sources */,
 				E0FCE939250F51B300851F59 /* Soda.swift in Sources */,
 				E06CD41425136336002D6E78 /* ModalViewController.swift in Sources */,
 				E0FCE914250F18A100851F59 /* ViewController.swift in Sources */,
