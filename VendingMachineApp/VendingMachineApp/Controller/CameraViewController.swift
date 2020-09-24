@@ -23,6 +23,9 @@ class CameraViewController: UIViewController {
     var previewLayer : AVCaptureVideoPreviewLayer!
     var takePictureBool = false
     let capturedImageView = CapturedImageView()
+    var windowOrientation: UIInterfaceOrientation {
+        return view.window?.windowScene?.interfaceOrientation ?? .unknown
+    }
     
     @IBAction func cancelTouched(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -51,7 +54,7 @@ class CameraViewController: UIViewController {
             capturedImageView.topAnchor.constraint(equalTo: takePicture.bottomAnchor, constant: 30),
             capturedImageView.trailingAnchor.constraint(equalTo: takePicture.trailingAnchor),
             
-            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
 
         ])
@@ -138,6 +141,13 @@ class CameraViewController: UIViewController {
         view.layer.insertSublayer(previewLayer, below: takePicture.layer)
         previewLayer.frame = self.view.layer.frame
         previewLayer.videoGravity = .resizeAspectFill
+        var initialVideoOrientation: AVCaptureVideoOrientation = .portrait
+        if self.windowOrientation != .unknown {
+            if let videoOrientation = AVCaptureVideoOrientation(rawValue: self.windowOrientation.rawValue) {
+                initialVideoOrientation = videoOrientation
+            }
+        }
+        previewLayer.connection?.videoOrientation = initialVideoOrientation
     }
     
     func setupInputs(){
