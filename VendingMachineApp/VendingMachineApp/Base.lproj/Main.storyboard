@@ -13,17 +13,28 @@
         <!--Camera View Controller-->
         <scene sceneID="IuO-0x-chr">
             <objects>
-                <viewController storyboardIdentifier="CameraViewController" id="p4B-aV-SG1" customClass="CameraViewController" customModule="VendingMachineApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraViewController" modalPresentationStyle="fullScreen" id="p4B-aV-SG1" customClass="CameraViewController" customModule="VendingMachineApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hef-Vh-Wtl">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="794"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXG-Bs-l4G">
-                                <rect key="frame" x="609" y="355" width="75" height="30"/>
+                                <rect key="frame" x="1088" y="280" width="75" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="didPressTakePhoto:" destination="p4B-aV-SG1" eventType="touchUpInside" id="mIm-5P-60n"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkS-ta-KDS">
+                                <rect key="frame" x="1115" y="633" width="48" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="취소">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelTouched:" destination="p4B-aV-SG1" eventType="touchUpInside" id="QZH-Cv-33H"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -33,12 +44,13 @@
                     <navigationItem key="navigationItem" id="EO9-Yx-o3p"/>
                     <value key="contentSizeForViewInPopover" type="size" width="704" height="794"/>
                     <connections>
+                        <outlet property="cancelButton" destination="zkS-ta-KDS" id="Ugc-K5-Vb9"/>
                         <outlet property="takePicture" destination="JXG-Bs-l4G" id="jvK-Vj-pTt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5W-1a-j40" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="707.53768844221111" y="-586.33093525179856"/>
+            <point key="canvasLocation" x="777.8894472361809" y="-606.47482014388493"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -103,8 +115,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wR7-56-3aJ">
-                                <rect key="frame" x="1153" y="40" width="34" height="26"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wR7-56-3aJ">
+                                <rect key="frame" x="27" y="32.5" width="24.5" height="18"/>
                                 <state key="normal" backgroundImage="camera" catalog="system"/>
                                 <connections>
                                     <segue destination="p4B-aV-SG1" kind="show" id="Cw0-03-oGA"/>
@@ -116,13 +128,13 @@
                         <constraints>
                             <constraint firstItem="wFu-Kd-ay7" firstAttribute="top" secondItem="5qA-C8-p7Z" secondAttribute="bottom" constant="30" id="1xo-ui-3wh"/>
                             <constraint firstItem="5qA-C8-p7Z" firstAttribute="centerX" secondItem="Nz8-dk-HB9" secondAttribute="centerX" id="DeH-2r-wve"/>
+                            <constraint firstItem="wR7-56-3aJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="FCL-oL-Uoo"/>
                             <constraint firstItem="UmM-Bz-7hF" firstAttribute="leading" secondItem="wFu-Kd-ay7" secondAttribute="trailing" constant="10" id="Fun-62-FlJ"/>
-                            <constraint firstItem="wR7-56-3aJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="39" id="GIB-PL-Wsi"/>
                             <constraint firstItem="5qA-C8-p7Z" firstAttribute="top" secondItem="Nz8-dk-HB9" secondAttribute="bottom" constant="29" id="I6t-jw-AQc"/>
                             <constraint firstItem="Nz8-dk-HB9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="N8L-FQ-Geo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UmM-Bz-7hF" secondAttribute="trailing" constant="80" id="OiZ-rg-qGq"/>
+                            <constraint firstItem="wR7-56-3aJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="27" id="hgY-oy-aK3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="StE-eN-FiF" secondAttribute="trailing" constant="49" id="ohB-TF-JJ2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wR7-56-3aJ" secondAttribute="trailing" constant="7" id="qbb-df-ulP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Nz8-dk-HB9" secondAttribute="trailing" constant="120" id="ta0-hb-gcj"/>
                             <constraint firstItem="UmM-Bz-7hF" firstAttribute="top" secondItem="5qA-C8-p7Z" secondAttribute="bottom" constant="30" id="wIp-zh-Xtx"/>
                             <constraint firstItem="StE-eN-FiF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="43" id="zwr-lv-Jlf"/>

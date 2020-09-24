@@ -12,6 +12,7 @@ import AVFoundation
 class CameraViewController: UIViewController {
 
     @IBOutlet weak var takePicture: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
     var videoOutput : AVCaptureVideoDataOutput!
     var captureSession : AVCaptureSession!
@@ -23,12 +24,21 @@ class CameraViewController: UIViewController {
     var takePictureBool = false
     let capturedImageView = CapturedImageView()
     
+    @IBAction func cancelTouched(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+ 
+    private func setupUI() {
         view.addSubview(capturedImageView)
         
         takePicture.translatesAutoresizingMaskIntoConstraints = false
         capturedImageView.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             takePicture.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -39,7 +49,10 @@ class CameraViewController: UIViewController {
             capturedImageView.heightAnchor.constraint(equalToConstant: 55),
             capturedImageView.widthAnchor.constraint(equalToConstant: 55),
             capturedImageView.topAnchor.constraint(equalTo: takePicture.bottomAnchor, constant: 30),
-            capturedImageView.trailingAnchor.constraint(equalTo: takePicture.trailingAnchor)
+            capturedImageView.trailingAnchor.constraint(equalTo: takePicture.trailingAnchor),
+            
+            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
 
         ])
         takePicture.layer.cornerRadius = 25
@@ -65,9 +78,11 @@ class CameraViewController: UIViewController {
                 deviceOrientation.isPortrait || deviceOrientation.isLandscape else {
                     return
             }
-
+            let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+            previewLayer.frame = rect
             videoPreviewLayerConnection.videoOrientation = newVideoOrientation
             videoOutput.connections.first?.videoOrientation = newVideoOrientation
+
         }
     }
     
