@@ -132,7 +132,7 @@ class CameraViewController: UIViewController {
         } else {
             fatalError("could not add video output")
         }
-        videoOutput.connections.first?.videoOrientation = .portrait
+        videoOutput.connections.first?.videoOrientation = .landscapeRight
     }
     
     func setupPreviewLayer(){
@@ -141,13 +141,17 @@ class CameraViewController: UIViewController {
         view.layer.insertSublayer(previewLayer, below: takePicture.layer)
         previewLayer.frame = self.view.layer.frame
         previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.connection?.videoOrientation = orientation()
+    }
+    
+    private func orientation() -> AVCaptureVideoOrientation {
         var initialVideoOrientation: AVCaptureVideoOrientation = .portrait
         if self.windowOrientation != .unknown {
             if let videoOrientation = AVCaptureVideoOrientation(rawValue: self.windowOrientation.rawValue) {
                 initialVideoOrientation = videoOrientation
             }
         }
-        previewLayer.connection?.videoOrientation = initialVideoOrientation
+        return initialVideoOrientation
     }
     
     func setupInputs(){
