@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     }
     private var historyXCoordinate = 20
     private var historyImageViwes: [UIImageView] = []
-    
+
     @IBOutlet weak var messageView: MessageView!
     @IBOutlet weak var fiveTousand: UIButton!
     @IBOutlet weak var oneTousand: UIButton!
