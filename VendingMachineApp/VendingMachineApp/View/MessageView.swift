@@ -17,21 +17,21 @@ class MessageView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
+        setupView()
     }
     
-    private func commonInit() {
+    private func setupView() {
         setupSelfView()
         setupHeader()
         setupTextField()
-        setupTabelView()
+        setupTableView()
     }
-    
+
     override func layoutSubviews() {
         myTableView.separatorStyle = .none
     }
@@ -45,13 +45,13 @@ class MessageView: UIView {
         layer.shadowRadius = cornerRadius / 2
     }
     
-    private func setupTabelView() {
+    private func setupTableView() {
         myTableView = UITableView(frame: CGRect(x: 0, y: 50, width: frame.width, height: 480))
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.rowHeight = UITableView.automaticDimension
         myTableView.estimatedRowHeight = 44.0
-
+        
         let revNibName = UINib(nibName: "YellowTableViewCell", bundle: nil)
         let sendNibName = UINib(nibName: "BlueTableViewCell", bundle: nil)
         myTableView.register(revNibName, forCellReuseIdentifier: "YellowTableViewCell")

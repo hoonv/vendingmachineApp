@@ -9,10 +9,10 @@
 import Foundation
 
 var beverages: [[String: [String]]] = []
-let beveragaeToken = ["콜라", "코카콜라", "사이다", "딸기우유", "바나나우유",
+let beverageTokens = ["콜라", "코카콜라", "사이다", "딸기우유", "바나나우유",
                       "칠성사이다", "칸타타", "조지아", "칸타타커피", "조지아커피"]
 
-beveragaeToken.forEach { beverages.append(contentsOf: makeBeverageDictForJson(token: $0)) }
+beverageTokens.forEach { beverages.append(contentsOf: makeBeverageDictForJson(token: $0)) }
 
 do {
     let fileURL = try FileManager.default
