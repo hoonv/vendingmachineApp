@@ -11,7 +11,7 @@ import Foundation
 struct Message {
     
     let text: String
-    let sender: Sender
+    private let sender: Sender
     
     enum Sender {
         case user
@@ -20,5 +20,9 @@ struct Message {
     init(sender: Sender, text: String) {
         self.text = text
         self.sender = sender
+    }
+    
+    func isUser() -> Bool {
+        return sender == .user
     }
 }

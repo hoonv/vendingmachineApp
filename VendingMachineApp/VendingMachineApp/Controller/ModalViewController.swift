@@ -15,11 +15,12 @@ class ModalViewController: UIViewController {
             .first!.delegate as! SceneDelegate
         return sceneDelegate.vendingMachine!
     }
+    private var idxToItem: [Int: Beverage] = [:]
+
     @IBOutlet var itemImageViews: [UIImageView]!
     @IBOutlet var addButtons: [UIButton]!
-    private var idxToItem: [Int: Beverage] = [:]
     @IBOutlet var labels: [UILabel]!
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangedBeverage),
@@ -40,6 +41,11 @@ class ModalViewController: UIViewController {
         guard let count = object["count"] as? Int else { return }
         guard let idx = machine.findIndex(beverage: sample) else { return }
         labels[idx].text = "\(count)개"
+    }
+    
+    @IBAction func addButtonTouched(_ sender: UIButton) {
+        guard let item = idxToItem[sender.tag] else { return }
+        machine.addProduct(beverage: item)
     }
     
     private func setupButtons() {
@@ -67,10 +73,5 @@ class ModalViewController: UIViewController {
         items.enumerated().forEach { (idx, item) in
             idxToItem[idx] = item.0
         }
-    }
-
-    @IBAction func addButtonTouched(_ sender: UIButton) {
-        guard let item = idxToItem[sender.tag] else { return }
-        machine.addProduct(beverage: item)
     }
 }

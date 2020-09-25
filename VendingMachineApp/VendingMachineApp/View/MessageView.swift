@@ -10,10 +10,10 @@ import UIKit
 
 class MessageView: UIView {
 
-    var myTableView: UITableView!
-    let bgColor = UIColor.systemGray5
-    let cornerRadius: CGFloat = 20
-    var messages: [Message] = []
+    private var myTableView: UITableView!
+    private let bgColor = UIColor.systemGray5
+    private let cornerRadius: CGFloat = 20
+    private var messages: [Message] = [] // 분리 해야함
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -85,7 +85,8 @@ class MessageView: UIView {
 
         addSubview(header)
     }
-    func scrollLastOfTableView() {
+    
+    private func scrollLastOfTableView() {
       // First figure out how many sections there are
       let lastSectionIndex = self.myTableView.numberOfSections - 1
       // Then grab the number of rows in the last section
@@ -102,6 +103,7 @@ extension MessageView: UITextFieldDelegate {
         messages.append(Message(sender: .system, text: textField.text ?? ""))
         textField.text = ""
         textField.endEditing(true)
+        //로직 분리 필요
         myTableView.reloadData()
         scrollLastOfTableView()
         return true
@@ -115,7 +117,7 @@ extension MessageView: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if messages[indexPath.row].sender == .user {
+        if messages[indexPath.row].isUser() {
             let cell = tableView.dequeueReusableCell(withIdentifier: "YellowTableViewCell") as? YellowTableViewCell ?? YellowTableViewCell()
             cell.message.text = messages[indexPath.row].text
             return cell

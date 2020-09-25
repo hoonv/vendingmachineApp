@@ -21,13 +21,13 @@ class CameraViewController: UIViewController {
         return view.window?.windowScene?.interfaceOrientation ?? .unknown
     }
 
-    var videoOutput : AVCaptureVideoDataOutput!
-    var captureSession : AVCaptureSession!
-    var backCamera : AVCaptureDevice!
-    var frontCamera : AVCaptureDevice!
-    var backInput : AVCaptureInput!
-    var frontInput : AVCaptureInput!
-    var previewLayer : AVCaptureVideoPreviewLayer!
+    private var videoOutput : AVCaptureVideoDataOutput!
+    private var captureSession : AVCaptureSession!
+    private var backCamera : AVCaptureDevice!
+    private var frontCamera : AVCaptureDevice!
+    private var backInput : AVCaptureInput!
+    private var frontInput : AVCaptureInput!
+    private var previewLayer : AVCaptureVideoPreviewLayer!
     
     @IBOutlet weak var takePicture: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -50,18 +50,18 @@ class CameraViewController: UIViewController {
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-
+        // Divice의 방향이 변경되었을때 preview와 videoOutout의 방향도 변경해줌
         if let videoPreviewLayerConnection = previewLayer.connection {
             let deviceOrientation = UIDevice.current.orientation
             guard let newVideoOrientation = AVCaptureVideoOrientation(rawValue: deviceOrientation.rawValue),
                 deviceOrientation.isPortrait || deviceOrientation.isLandscape else {
                     return
             }
+            // preview의 frame도 재설정 해줌
             let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
             previewLayer.frame = rect
             videoPreviewLayerConnection.videoOrientation = newVideoOrientation
             videoOutput.connections.first?.videoOrientation = newVideoOrientation
-
         }
     }
     
@@ -111,44 +111,45 @@ class CameraViewController: UIViewController {
     }
     
     private func setupAndStartCaptureSession(){
+        // 세션을 초기화 하고 인풋 아웃풋 설정 한 후 세션을 시작함
         DispatchQueue.global(qos: .userInitiated).async{
-            //init session
             self.captureSession = AVCaptureSession()
-            //start configuration
+            
             self.captureSession.beginConfiguration()
-
-            //session specific configuration
-            //before setting a session presets, we should check if the session supports it
+            
             if self.captureSession.canSetSessionPreset(.photo) {
                 self.captureSession.sessionPreset = .photo
             }
             self.captureSession.automaticallyConfiguresCaptureDeviceForWideColor = true
-
+            
+            // input
             self.setupInputs()
             
+            // preview
             DispatchQueue.main.async {
-                //setup preview layer
                 self.setupPreviewLayer()
             }
+
+            // input
             self.setupOutput()
             
-            //commit configuration
             self.captureSession.commitConfiguration()
-            //start running it
+
             self.captureSession.startRunning()
         }
     }
     
     private func setupVision() -> NSError? {
-        // Setup Vision parts
+        // 모델 셋업
         let error: NSError! = nil
         
         guard let modelURL = Bundle.main.url(forResource: "ObjectDetector", withExtension: "mlmodelc") else {
-            return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
+            return NSError(domain: "CameraViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
             let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
+                // 물체를 인식할 때마다 이 핸들러가 불림
                 DispatchQueue.main.async(execute: {
                     if let results = request.results {
                         self.drawVisionRequestResults(results)
@@ -168,6 +169,7 @@ class CameraViewController: UIViewController {
             guard let objectObservation = observation as? VNRecognizedObjectObservation else {
                 continue
             }
+            // 일치율이 높은 첫번째 오브젝트를 사용
             let first = objectObservation.labels[0]
             let objectBounds = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(view.bounds.width), Int(view.bounds.height))
 
@@ -176,7 +178,7 @@ class CameraViewController: UIViewController {
                 self.detectionOverlay.position = CGPoint(x: objectBounds.midX, y: objectBounds.midY)
                 let formattedString = NSMutableAttributedString(string: String(format: "\(first.identifier)\nConfidence:  %.2f", first.confidence))
                 self.textLayer.string = formattedString
-                self.textLayer.frame = CGRect(x: objectBounds.minX + 2, y: objectBounds.minY + 2, width: objectBounds.width, height: 30)
+                self.textLayer.frame = CGRect(x: objectBounds.minX + 2, y: objectBounds.minY + 2, width: objectBounds.width - 2, height: 30)
             }
         }
     }
@@ -214,6 +216,8 @@ class CameraViewController: UIViewController {
     }
     
     private func setupInputs(){
+        // 앞 뒤의 카메라를 다 설정하지만 초기값은 뒤의 카메라를 사용
+        // 카메라 스위치는 구현 안되어있음.
         //get back camera
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             backCamera = device

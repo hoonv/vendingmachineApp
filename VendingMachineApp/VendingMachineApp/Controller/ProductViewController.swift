@@ -16,6 +16,7 @@ class ProductViewController: UIViewController {
         } else { return VendingMachine() }
     }
     private var idxToItem: [Int: Beverage] = [:]
+    
     @IBOutlet weak var ProductCollectionView: UICollectionView!
     
     required init?(coder: NSCoder) {
@@ -64,8 +65,6 @@ class ProductViewController: UIViewController {
         }
     }
 }
-
-
 
 extension ProductViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
